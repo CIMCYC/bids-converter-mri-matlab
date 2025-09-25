@@ -1,0 +1,34 @@
+# Archivos temporales de MATLAB
+*.asv
+*.mex*
+*.mexa64
+*.mexw32
+*.mexw64
+*.mdl
+*.slx
+*.slxc
+*.slxp
+*.slxf
+
+# Carpetas temporales
+/tmp/
+*.slprj/
+*.autosave/
+*_autosave.m
+
+# Archivos de caché
+*.mcr
+*.mex*
+
+# Archivos de backup
+*~
+*.bak
+*.tmp
+
+# Carpetas de salida generadas por MATLAB
+bin/
+obj/
+
+# Archivos de proyectos y configuraciones de MATLAB
+*.prj
+*.mlappinstall
