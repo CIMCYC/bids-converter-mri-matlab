@@ -8,7 +8,7 @@
 % Description: Subject identifier. According to BIDS specification this
 % identifier must include the prefix 'sub-' followed by an ID.
 
-cfg.subjectId = 'sub-NeEpaaq';
+cfg.subjectId = 'sub-hfhfhd';
 
 %% BIDS - Session Name:
 % Description: Identifier for the session name. In accordance with the BIDS 
@@ -45,12 +45,13 @@ cfg.generateChangesFile = true;
 %% RAW - DICOM directory:
 % Description: Folder containing RAW data:
 
-cfg.rawDICOM = 'C:\Users\David\Desktop\raw\NeEpaaq_1\Alfonso_Caracuel_Rm - 1';
+cfg.rawDICOM = ['C:\Users\David\Desktop\raw\NeEpaaq_1\Alfo' ...
+    'nso_Caracuel_Rm - 1'];
 
 %% RAW - Extra files:
 % Description: Import TSV files for the specified folder.
 
-cfg.importTSV = false;
+cfg.importTSV = true;
 
 %% RAW DICOM folder list:
 % Description: Cell array of folders containing the dcm files to convert.
