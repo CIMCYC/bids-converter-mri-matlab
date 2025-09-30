@@ -8,7 +8,7 @@
 % Description: Subject identifier. According to BIDS specification this
 % identifier must include the prefix 'sub-' followed by an ID.
 
-cfg.subjectId = 'sub-hfhfhd';
+cfg.subjectId = 'sub-001';
 
 %% BIDS - Session Name:
 % Description: Identifier for the session name. In accordance with the BIDS 
@@ -24,7 +24,7 @@ cfg.sessionName = 'ses-pre';
 
 %% BIDS - Data format:
 % Description: There are several data formats that can be selected in the 
-% dicm2nii package:
+% dcm2niix package:
 %
 % - 'n' for single nii uncompressed.
 % - 'y' for single nii.gz compressed.
