@@ -17,7 +17,7 @@ addpath('src\');
 
 %% Initialize dataset load configuration file:
 
-run cfg/datasetDescriptionJSON.m;
+run cfg/datasetDescription.m;
 run cfg/configurationFile.m;
 
 initializeBIDSDataset(cfg, datasetDescription);
