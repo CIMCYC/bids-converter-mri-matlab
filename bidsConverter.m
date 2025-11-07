@@ -22,7 +22,6 @@ run cfg/configurationFile.m;
 
 initializeBIDSDataset(cfg, datasetDescription);
 
-
 %% DICOM to NIFTI.
 %  Conversion routine:
 

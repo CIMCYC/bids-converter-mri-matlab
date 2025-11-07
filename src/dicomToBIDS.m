@@ -1,11 +1,31 @@
 function cmdout = dicomToBIDS(cfg, dcm)
 
-dcmFolder = dir(dcm.folder);
+% Importante: Aquí necesitamos una/varias carpetas, no su contenido. Si en
+% dcm.folder tenemos una carpeta, al aplicarle el dir() estaremos listando
+% los archivos de su interior y eso no es lo que queremos. 
 
-for f = 1 : length(dcmFolder)
+% Nos aseguramos de que haya un asterisco al final para buscar 
+% coincidencias:
+
+if ~endsWith(dcm.folder, '*')
+    dcm.folder = [dcm.folder '*'];
+end
+
+allItems = dir(dcm.folder);
+dcmFolders = allItems([allItems.isdir]);
+
+% Mostramos un warning si hay varias carpetas que pasen el filtro del
+% nombre, el comportamiento ideal es que en cada celda del dcm tengamos
+% solo una ruta a la carpeta.
+
+if length(dcmFolders) > 1
+    warning('Possible error: More than one folder asociated to dcm.');
+end
+
+for f = 1 : length(dcmFolders)
 
     % Convetimos en string por si hay espacios en el nombre
-    inFolder = string([dcmFolder(f).folder filesep dcmFolder(f).name]);
+    inFolder = string([dcmFolders(f).folder filesep dcmFolders(f).name]);
     cfg.outFolder = string(cfg.outFolder);
 
     % Creamos la carpeta de salida si no existe:

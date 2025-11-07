@@ -20,7 +20,7 @@ cfg.subjectId = 'sub-001';
 % as an empty string. Otherwise, specify the desired session label 
 % (e.g., 'ses-01').
 
-cfg.sessionName = 'ses-pre';
+cfg.sessionName = 'ses-post';
 
 %% BIDS - Data format:
 % Description: There are several data formats that can be selected in the 
@@ -95,11 +95,11 @@ cfg.importTSV = false;
 %  (*) When applicable, the modality is indicated in the suffix
 
 %% Functional
-% dcm{1}.folder = [cfg.rawDICOM filesep 'Rangeltask1*'];
-% dcm{1}.dataType = 'func';
-% dcm{1}.modality = 'bold';
-% dcm{1}.task = 'task-rangeltask1';
-% dcm{1}.events = 'events.tsv';
+dcm{1}.folder = [cfg.rawDICOM filesep 'Rangeltask1*'];
+dcm{1}.dataType = 'func';
+dcm{1}.modality = 'bold';
+dcm{1}.task = 'task-rangeltask1';
+dcm{1}.events = 'events.tsv';
 
 dcm{2}.folder = [cfg.rawDICOM filesep 'Rangeltask2*'];
 dcm{2}.dataType = 'func';
@@ -126,7 +126,7 @@ dcm{5}.task = 'task-rest';
 
 %% Anatomical
 
-dcm{6}.folder = [cfg.rawDICOM filesep 't1_mprage*']; 
+dcm{6}.folder = [cfg.rawDICOM filesep 't1_mprage_sag_p2_1iso_MGH_6']; 
 dcm{6}.dataType = 'anat';
 dcm{6}.modality = 'T1w';
 
@@ -136,13 +136,13 @@ dcm{7}.modality = 'T2w';
 
 %% Fieldmaps
 
-dcm{8}.folder = [cfg.rawDICOM filesep 'gre_field_mapping_33*'];
+dcm{8}.folder = [cfg.rawDICOM filesep 'gre_field_mapping_39*'];
 dcm{8}.dataType = 'fmap';
 dcm{8}.modality = 'fieldmap';
 
 %% DTI
 
-dcm{10}.folder = [cfg.rawDICOM filesep 'ep2d_diff_mgh_1_38*'];
+dcm{10}.folder = [cfg.rawDICOM filesep 'ep2d_diff_mgh_1_44*'];
 dcm{10}.dataType = 'dwi';
 dcm{10}.modality = 'dwi';
 
