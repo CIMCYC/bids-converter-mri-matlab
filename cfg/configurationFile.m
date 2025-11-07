@@ -35,7 +35,7 @@ cfg.dataFormat = 'y';
 %% BIDS - Output directory:
 % Description: Main directory of your BIDS compatible project.
 
-cfg.outputDirectory = 'C:\Users\David\Desktop\bids';
+cfg.outputDirectory = '/Users/David/Desktop/bids';
 
 cfg.generateDatasetDescriptionFile = true;
 cfg.generateREADMEFile = true;
@@ -45,13 +45,13 @@ cfg.generateChangesFile = true;
 %% RAW - DICOM directory:
 % Description: Folder containing RAW data:
 
-cfg.rawDICOM = ['C:\Users\David\Desktop\raw\NeEpaaq_1\Alfo' ...
-    'nso_Caracuel_Rm - 1'];
+cfg.rawDICOM = ['/Users/David/Desktop/raw/NeBeexd_2/' ...
+    'Alfonso_Caracuel_Rm - 1'];
 
 %% RAW - Extra files:
 % Description: Import TSV files for the specified folder.
 
-cfg.importTSV = true;
+cfg.importTSV = false;
 
 %% RAW DICOM folder list:
 % Description: Cell array of folders containing the dcm files to convert.
@@ -136,23 +136,15 @@ dcm{7}.modality = 'T2w';
 
 %% Fieldmaps
 
-dcm{8}.folder = [cfg.rawDICOM filesep 'gre_field_mapping_34*'];
+dcm{8}.folder = [cfg.rawDICOM filesep 'gre_field_mapping_33*'];
 dcm{8}.dataType = 'fmap';
 dcm{8}.modality = 'fieldmap';
 
-dcm{9}.folder = [cfg.rawDICOM filesep 'gre_field_mapping_31*'];
-dcm{9}.dataType = 'fmap';
-dcm{9}.modality = 'fieldmap';
-
 %% DTI
 
-dcm{10}.folder = [cfg.rawDICOM filesep 'ep2d_diff_mgh_1_39*'];
+dcm{10}.folder = [cfg.rawDICOM filesep 'ep2d_diff_mgh_1_38*'];
 dcm{10}.dataType = 'dwi';
 dcm{10}.modality = 'dwi';
-
-dcm{11}.folder = [cfg.rawDICOM filesep 'ep2d_diff_mgh_1_36*'];
-dcm{11}.dataType = 'dwi';
-dcm{11}.modality = 'dwi';
 
 
 

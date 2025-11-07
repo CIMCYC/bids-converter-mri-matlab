@@ -13,7 +13,7 @@
 
 clc
 clear all
-addpath('src\');
+addpath('src/');
 
 %% Initialize dataset load configuration file:
 

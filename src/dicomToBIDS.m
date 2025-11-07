@@ -17,6 +17,26 @@ for f = 1 : length(dcmFolder)
     %     mkdir(cfg.derivativesFolder);
     % end
 
+    % Detectar sistema operativo para añadir el path a dcm2niix:
+    if ismac
+        % Añadir rutas típicas de Homebrew y /usr/local a PATH si no están
+        currentPath = getenv('PATH');
+        extraPaths = {'/usr/local/bin', '/opt/homebrew/bin'};
+        for p = extraPaths
+            if ~contains(currentPath, p{1})
+                currentPath = [currentPath ':' p{1}];
+            end
+        end
+        setenv('PATH', currentPath);
+    end
+
+    % Verificar si dcm2niix es accesible
+    [status_check, cmdout_check] = system('which dcm2niix');
+    if status_check ~= 0
+        warning('dcm2niix no se encuentra en el PATH. cmdout: %s', ...
+            cmdout_check);
+    end
+
     % Construcción del comando:
     if isfield(dcm, 'derivatives') && 0
         command = sprintf('dcm2niix -f "%s" -z "%s" -o "%s" "%s"', ...
@@ -32,10 +52,12 @@ for f = 1 : length(dcmFolder)
     % Ejecutar el comando
     [status, cmdout] = system(command);
 
-    if status == 0
-        disp('> Done!');
+    % Mostramos el resultado:
+    if status ~= 0
+        fprintf('Error ejecutando dcm2niix (status %d):\n%s\n', ...
+            status, cmdout);
     else
-        warning('Conversion Error.');
+        disp('> Conversión completada correctamente.');
     end
 
     %% Update taskName in sidecar JSON:
