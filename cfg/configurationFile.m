@@ -95,11 +95,11 @@ cfg.importTSV = false;
 %  (*) When applicable, the modality is indicated in the suffix
 
 %% Functional
-dcm{1}.folder = [cfg.rawDICOM filesep 'Rangeltask1*'];
-dcm{1}.dataType = 'func';
-dcm{1}.modality = 'bold';
-dcm{1}.task = 'task-rangeltask1';
-dcm{1}.events = 'events.tsv';
+% dcm{1}.folder = [cfg.rawDICOM filesep 'Rangeltask1*'];
+% dcm{1}.dataType = 'func';
+% dcm{1}.modality = 'bold';
+% dcm{1}.task = 'task-rangeltask1';
+% dcm{1}.events = 'events.tsv';
 
 dcm{2}.folder = [cfg.rawDICOM filesep 'Rangeltask2*'];
 dcm{2}.dataType = 'func';

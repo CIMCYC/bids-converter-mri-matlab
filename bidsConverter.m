@@ -28,7 +28,7 @@ initializeBIDSDataset(cfg, datasetDescription);
 
 for i = 1 : length (dcm)
 
-    if ~isempty(dir(dcm{i}.folder))
+    if ~isempty(dcm{i}) && ~isempty(dir(dcm{i}.folder))
         %% Output folder:
         cfg.outFolder = [cfg.outputDirectory filesep cfg.subjectId ...
             filesep cfg.sessionName filesep dcm{i}.dataType];
