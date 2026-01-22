@@ -51,7 +51,11 @@ for f = 1 : length(dcmFolders)
     end
 
     % Verificar si dcm2niix es accesible
-    [status_check, cmdout_check] = system('which dcm2niix');
+    if ispc
+        [status_check, cmdout_check] = system('where dcm2niix');
+    else
+        [status_check, cmdout_check] = system('which dcm2niix');
+    end
     if status_check ~= 0
         warning('dcm2niix no se encuentra en el PATH. cmdout: %s', ...
             cmdout_check);

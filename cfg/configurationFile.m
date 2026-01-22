@@ -20,7 +20,7 @@ cfg.subjectId = 'sub-001';
 % as an empty string. Otherwise, specify the desired session label 
 % (e.g., 'ses-01').
 
-cfg.sessionName = 'ses-post';
+cfg.sessionName = 'ses-pre';
 
 %% BIDS - Data format:
 % Description: There are several data formats that can be selected in the 
@@ -35,7 +35,7 @@ cfg.dataFormat = 'y';
 %% BIDS - Output directory:
 % Description: Main directory of your BIDS compatible project.
 
-cfg.outputDirectory = '/Users/David/Desktop/bids';
+cfg.outputDirectory = 'C:\Users\David\Desktop\bids';
 
 cfg.generateDatasetDescriptionFile = true;
 cfg.generateREADMEFile = true;
@@ -45,8 +45,8 @@ cfg.generateChangesFile = true;
 %% RAW - DICOM directory:
 % Description: Folder containing RAW data:
 
-cfg.rawDICOM = ['/Users/David/Desktop/raw/NeBeexd_2/' ...
-    'Alfonso_Caracuel_Rm - 1'];
+cfg.rawDICOM = ['C:\Users\David\Desktop\raw\NeBeexd_1\Alfo' ...
+    'nso_Caracuel_Rm - 1'];
 
 %% RAW - Extra files:
 % Description: Import TSV files for the specified folder.
@@ -95,6 +95,7 @@ cfg.importTSV = false;
 %  (*) When applicable, the modality is indicated in the suffix
 
 %% Functional
+
 dcm{1}.folder = [cfg.rawDICOM filesep 'Rangeltask1*'];
 dcm{1}.dataType = 'func';
 dcm{1}.modality = 'bold';
@@ -145,9 +146,3 @@ dcm{8}.modality = 'fieldmap';
 dcm{10}.folder = [cfg.rawDICOM filesep 'ep2d_diff_mgh_1_44*'];
 dcm{10}.dataType = 'dwi';
 dcm{10}.modality = 'dwi';
-
-
-
-
-
-
