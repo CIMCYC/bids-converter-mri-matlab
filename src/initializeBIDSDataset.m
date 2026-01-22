@@ -2,56 +2,60 @@ function initializeBIDSDataset(cfg, datasetDescription)
 
 % Creamos la carpeta de salida si no existe:
 if ~exist(cfg.outputDirectory, 'dir')
-
-
     mkdir(cfg.outputDirectory);
+end
 
-    %% Generate Dataset Description file
+%% Generate Dataset Description file
 
-    if cfg.generateDatasetDescriptionFile
-        if verLessThan('matlab','9.10')
-            data = jsonencode(datasetDescription);
-        else
-            data = jsonencode(datasetDescription,'PrettyPrint',true);
-        end
+jsonFile = fullfile(cfg.outputDirectory, 'dataset_description.json');
 
-        fid = fopen([cfg.outputDirectory filesep 'dataset_description.json'], 'w');
-        if fid == -1, error('Cannot create JSON file'); end
-        fwrite(fid, data, 'char');
-        fclose(fid);
+if cfg.generateDatasetDescriptionFile && ~exist(jsonFile, 'file')
+    if verLessThan('matlab','9.10')
+        data = jsonencode(datasetDescription);
+    else
+        data = jsonencode(datasetDescription,'PrettyPrint',true);
     end
 
-    %% Import LICENSE file:
+    fid = fopen([cfg.outputDirectory filesep 'dataset_description.json'], 'w');
+    if fid == -1, error('Cannot create JSON file'); end
+    fwrite(fid, data, 'char');
+    fclose(fid);
+end
 
-    if cfg.generateLicenseFile
-        if ~isempty(datasetDescription.License)
-            file = ['templates/licenses/' datasetDescription.License];
-            copyfile(file, [cfg.outputDirectory filesep 'LICENSE']);
-            disp(['> License file ' ...
-                datasetDescription.License ...
-                ' has been added to the project folder.'])
-        end
+%% Import LICENSE file:
+licenseOut = fullfile(cfg.outputDirectory, 'LICENSE');
+
+if cfg.generateLicenseFile && ~exist(licenseOut, 'file')
+    if ~isempty(datasetDescription.License)
+        file = ['templates/licenses/' datasetDescription.License];
+        copyfile(file, [cfg.outputDirectory filesep 'LICENSE']);
+        disp(['> License file ' ...
+            datasetDescription.License ...
+            ' has been added to the project folder.'])
     end
+end
 
-    %% Import README file:
+%% Import README file:
 
-    if cfg.generateREADMEFile
-        file = 'templates/README';
-        copyfile(file, [cfg.outputDirectory filesep 'README']);
-        disp('> Warning: Please, remember to edit the generated README file.')
-    end
+readmeOut = fullfile(cfg.outputDirectory, 'README');
 
-    %% Generate initial CHANGES file:
+if cfg.generateREADMEFile && ~exist(readmeOut, 'file')
+    file = 'templates/README';
+    copyfile(file, [cfg.outputDirectory filesep 'README']);
+    disp('> Warning: Please, remember to edit the generated README file.')
+end
 
-    if cfg.generateChangesFile
-        changesLog = [date ' - Project creation.'];
-        fid = fopen([cfg.outputDirectory filesep 'CHANGES'], 'w');
-        if fid == -1, error('Cannot create CHANGES file'); end
-        fwrite(fid, changesLog, 'char');
-        fclose(fid);
-        disp('> Warning: Please, remember to edit the generated CHANGES file.')
-    end
+%% Generate initial CHANGES file:
 
+changesOut = fullfile(cfg.outputDirectory, 'CHANGES');
+
+if cfg.generateChangesFile && ~exist(changesOut, 'file')
+    changesLog = [date ' - Project creation.'];
+    fid = fopen([cfg.outputDirectory filesep 'CHANGES'], 'w');
+    if fid == -1, error('Cannot create CHANGES file'); end
+    fwrite(fid, changesLog, 'char');
+    fclose(fid);
+    disp('> Warning: Please, remember to edit the generated CHANGES file.')
 end
 
 end
