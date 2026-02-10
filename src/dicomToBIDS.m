@@ -33,41 +33,28 @@ for f = 1 : length(dcmFolders)
         mkdir(cfg.outFolder);
     end
 
+    % Creamos la carpeta de derivatives si fuese necesario:
     % if ~exist(cfg.derivativesFolder, 'dir')
     %     mkdir(cfg.derivativesFolder);
     % end
 
-    % Detectar sistema operativo para añadir el path a dcm2niix:
-    if ismac
-        % Añadir rutas típicas de Homebrew y /usr/local a PATH si no están
-        currentPath = getenv('PATH');
-        extraPaths = {'/usr/local/bin', '/opt/homebrew/bin'};
-        for p = extraPaths
-            if ~contains(currentPath, p{1})
-                currentPath = [currentPath ':' p{1}];
-            end
-        end
-        setenv('PATH', currentPath);
-    end
+    %% Check dcm-nii converters:
+    % Comprobamos que los conversores de datos son accesibles desde el
+    % comando 
+    checkDataConverters();
 
-    % Verificar si dcm2niix es accesible
-    if ispc
-        [status_check, cmdout_check] = system('where dcm2niix');
-    else
-        [status_check, cmdout_check] = system('which dcm2niix');
-    end
-    if status_check ~= 0
-        warning('dcm2niix no se encuentra en el PATH. cmdout: %s', ...
-            cmdout_check);
-    end
-
-    % Construcción del comando:
+    %% Construcción del comando:
     if isfield(dcm, 'derivatives') && 0
         command = sprintf('dcm2niix -f "%s" -z "%s" -o "%s" "%s"', ...
             cfg.fileName, cfg.dataFormat, cfg.derivativeFolder, inFolder);
     else
-        command = sprintf('dcm2niix -f "%s" -z "%s" -o "%s" "%s"', ...
-            cfg.fileName, cfg.dataFormat, cfg.outFolder, inFolder);
+        if strcmp(dcm.dataType,'mrs') 
+            command = sprintf('spec2nii auto "%s" -o "%s" -f "%s" -j', ...
+                inFolder, cfg.outFolder, cfg.fileName);
+        else
+            command = sprintf('dcm2niix -f "%s" -z "%s" -o "%s" "%s"', ...
+                cfg.fileName, cfg.dataFormat, cfg.outFolder, inFolder);
+        end
     end
 
     disp('Converting DICOM data from: ')

@@ -29,6 +29,10 @@ if isfield(dcm, 'dir')
     direction  = dcm.dir;
 end
 
+if isfield(dcm, 'echo')
+    echo  = dcm.echo;
+end
+
 
 %% Generate the file depending on dataType name:
 if strcmp(dataType,'func')
@@ -48,7 +52,10 @@ elseif strcmp(dataType,'dwi')
 
     fileName = [cfg.subjectId '_' cfg.sessionName '_' direction '_' ...
         runNumber '_' dataModality];
-    
+
+elseif strcmp(dataType,'mrs')
+    fileName = [cfg.subjectId '_' cfg.sessionName '_' taskName '_' ...
+        direction '_' runNumber '_' echo '_' dataModality];
 else
     fileName = [cfg.subjectId '_' cfg.sessionName '_' dataModality];
 end

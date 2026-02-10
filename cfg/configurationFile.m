@@ -20,7 +20,7 @@ cfg.subjectId = 'sub-001';
 % as an empty string. Otherwise, specify the desired session label 
 % (e.g., 'ses-01').
 
-cfg.sessionName = 'ses-pre';
+cfg.sessionName = '';
 
 %% BIDS - Data format:
 % Description: There are several data formats that can be selected in the 
@@ -35,7 +35,7 @@ cfg.dataFormat = 'y';
 %% BIDS - Output directory:
 % Description: Main directory of your BIDS compatible project.
 
-cfg.outputDirectory = 'C:\Users\David\Desktop\bids';
+cfg.outputDirectory = 'D:\marilo\bids';
 
 cfg.generateDatasetDescriptionFile = true;
 cfg.generateREADMEFile = true;
@@ -45,8 +45,7 @@ cfg.generateChangesFile = true;
 %% RAW - DICOM directory:
 % Description: Folder containing RAW data:
 
-cfg.rawDICOM = ['C:\Users\David\Desktop\raw\NeBeexd_1\Alfo' ...
-    'nso_Caracuel_Rm - 1'];
+cfg.rawDICOM = ['D:\marilo\raw\Juanverdejo_Viorep - 1'];
 
 %% RAW - Extra files:
 % Description: Import TSV files for the specified folder.
@@ -64,12 +63,22 @@ cfg.importTSV = false;
 %               - 'func': Functional data.
 %               - 'fmap': Field mapping data.
 %               - 'dwi':  Diffusion data.
+%               - 'mrs':  Magnetic Resonance Spectroscopy data.
 %               - 'beh':  Behavioral data.
 % - MODALITY: The category of brain data recorded by a file. Examples:
-%               - 'T1w':  T1-weighted data.
-%               - 'T2w':  T2-weighted data.
-%               - 'bold': Functional data.
-%               - 'dwi':  Diffusion data.
+%               - Anatomical:
+%                   - 'T1w':  T1-weighted data.
+%                   - 'T2w':  T2-weighted data.
+%               - Functional:
+%                   - 'bold': Functional data.
+%               - Diffusion:
+%                   - 'dwi':  Diffusion data.
+%               - Spectroscopy:
+%                   - 'svs':    Single-Voxel Spectroscopy data.
+%                   - 'mrsi':   Magnetic resonance spectroscopic imaging.
+%                   - 'unloc':  Unlocalized spectroscopy.
+%                   - 'mrsref': Concentration or calibration reference.
+
 % - TASK: A set of structured activities performed by the participant.
 %         Tasks are usually accompanied by stimuli and responses. The 
 %         task-<label> MUST be consistent across subjects and sessions. 
@@ -89,6 +98,11 @@ cfg.importTSV = false;
 %        Example:
 %               - 'run-1': Files corresponding to the first run.
 %               - 'run-2': Files corresponding to the second run.
+% - ECHO: This entity represents the "EchoTime" metadata field. Therefore, 
+%         if the echo-<index> entity is present in a filename, "EchoTime" 
+%         MUST be defined in the associated metadata. Please note that the 
+%         <index> denotes the number/index (in the form of a nonnegative 
+%         integer), not the "EchoTime" value of the separate JSON file.
 % - EVENTS: 
 %
 %
@@ -96,53 +110,66 @@ cfg.importTSV = false;
 
 %% Functional
 
-dcm{1}.folder = [cfg.rawDICOM filesep 'Rangeltask1*'];
-dcm{1}.dataType = 'func';
-dcm{1}.modality = 'bold';
-dcm{1}.task = 'task-rangeltask1';
-dcm{1}.events = 'events.tsv';
+% dcm{1}.folder = [cfg.rawDICOM filesep 'Rangeltask1*'];
+% dcm{1}.dataType = 'func';
+% dcm{1}.modality = 'bold';
+% dcm{1}.task = 'task-rangeltask1';
+% dcm{1}.events = 'events.tsv';
+% 
+% dcm{2}.folder = [cfg.rawDICOM filesep 'Rangeltask2*'];
+% dcm{2}.dataType = 'func';
+% dcm{2}.modality = 'bold';
+% dcm{2}.task = 'task-rangeltask2';
+% dcm{2}.events = 'events.tsv';
+% 
+% dcm{3}.folder = [cfg.rawDICOM filesep 'Rangeltask3*'];
+% dcm{3}.dataType = 'func';
+% dcm{3}.modality = 'bold';
+% dcm{3}.task = 'task-rangeltask3';
+% dcm{3}.events = 'events.tsv';
+% 
+% dcm{4}.folder = [cfg.rawDICOM filesep 'Go-no-go*'];
+% dcm{4}.dataType = 'func';
+% dcm{4}.modality = 'bold';
+% dcm{4}.task = 'task-gonogo';
+% dcm{4}.events = 'events.tsv';
+% 
+% dcm{5}.folder = [cfg.rawDICOM filesep 'Resting*'];
+% dcm{5}.dataType = 'func';
+% dcm{5}.modality = 'bold';
+% dcm{5}.task = 'task-rest';
+% 
+% %% Anatomical
+% 
+% dcm{6}.folder = [cfg.rawDICOM filesep 't1_mprage_sag_p2_1iso_MGH_6']; 
+% dcm{6}.dataType = 'anat';
+% dcm{6}.modality = 'T1w';
+% 
+% dcm{7}.folder = [cfg.rawDICOM filesep 't2_tse*'];
+% dcm{7}.dataType = 'anat';
+% dcm{7}.modality = 'T2w';
+% 
+% 
+% %% Fieldmaps
+% 
+% dcm{8}.folder = [cfg.rawDICOM filesep 'gre_field_mapping_33*'];
+% dcm{8}.dataType = 'fmap';
+% dcm{8}.modality = 'fieldmap';
+% 
+% %% DTI
+% 
+% dcm{9}.folder = [cfg.rawDICOM filesep 'ep2d_diff_mgh_1_38*'];
+% dcm{9}.dataType = 'dwi';
+% dcm{9}.modality = 'dwi';
 
-dcm{2}.folder = [cfg.rawDICOM filesep 'Rangeltask2*'];
-dcm{2}.dataType = 'func';
-dcm{2}.modality = 'bold';
-dcm{2}.task = 'task-rangeltask2';
-dcm{2}.events = 'events.tsv';
+%% Spectroscopy
 
-dcm{3}.folder = [cfg.rawDICOM filesep 'Rangeltask3*'];
-dcm{3}.dataType = 'func';
-dcm{3}.modality = 'bold';
-dcm{3}.task = 'task-rangeltask3';
-dcm{3}.events = 'events.tsv';
+dcm{10}.folder = [cfg.rawDICOM filesep 'svs_se_30*'];
+dcm{10}.dataType = 'mrs';
+dcm{10}.modality = 'svs';
+dcm{10}.echo = 'echo-30';
 
-dcm{4}.folder = [cfg.rawDICOM filesep 'Go-no-go*'];
-dcm{4}.dataType = 'func';
-dcm{4}.modality = 'bold';
-dcm{4}.task = 'task-gonogo';
-dcm{4}.events = 'events.tsv';
-
-dcm{5}.folder = [cfg.rawDICOM filesep 'Resting*'];
-dcm{5}.dataType = 'func';
-dcm{5}.modality = 'bold';
-dcm{5}.task = 'task-rest';
-
-%% Anatomical
-
-dcm{6}.folder = [cfg.rawDICOM filesep 't1_mprage_sag_p2_1iso_MGH_6']; 
-dcm{6}.dataType = 'anat';
-dcm{6}.modality = 'T1w';
-
-dcm{7}.folder = [cfg.rawDICOM filesep 't2_tse*']; 
-dcm{7}.dataType = 'anat';
-dcm{7}.modality = 'T2w';
-
-%% Fieldmaps
-
-dcm{8}.folder = [cfg.rawDICOM filesep 'gre_field_mapping_39*'];
-dcm{8}.dataType = 'fmap';
-dcm{8}.modality = 'fieldmap';
-
-%% DTI
-
-dcm{10}.folder = [cfg.rawDICOM filesep 'ep2d_diff_mgh_1_44*'];
-dcm{10}.dataType = 'dwi';
-dcm{10}.modality = 'dwi';
+dcm{11}.folder = [cfg.rawDICOM filesep 'svs_se_135*'];
+dcm{11}.dataType = 'mrs';
+dcm{11}.modality = 'svs';
+dcm{11}.echo = 'echo-135';
