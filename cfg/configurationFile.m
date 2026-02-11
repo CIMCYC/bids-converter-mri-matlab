@@ -98,6 +98,14 @@ cfg.importTSV = false;
 %        Example:
 %               - 'run-1': Files corresponding to the first run.
 %               - 'run-2': Files corresponding to the second run.
+% - ACQ: The acq-<label> entity corresponds to a custom label the user MAY 
+%        use to distinguish a different set of parameters used for 
+%        acquiring the same modality. For example, this should be used when 
+%        a study includes two T1w images - one full brain low resolution 
+%        and one restricted field of view but high resolution. 
+%        Example:
+%               - 'acq-highres'
+%               - 'acq-lowres'
 % - ECHO: This entity represents the "EchoTime" metadata field. Therefore, 
 %         if the echo-<index> entity is present in a filename, "EchoTime" 
 %         MUST be defined in the associated metadata. Please note that the 
@@ -139,15 +147,30 @@ cfg.importTSV = false;
 % dcm{5}.modality = 'bold';
 % dcm{5}.task = 'task-rest';
 % 
-% %% Anatomical
+%% Anatomical
+% Los directorios a convertir que contengan datos anatómicos deben
+% especificarse aquí. Los parametros que pueden incluirse en esta modalidad
+% son los siguientes:
 % 
-% dcm{6}.folder = [cfg.rawDICOM filesep 't1_mprage_sag_p2_1iso_MGH_6']; 
-% dcm{6}.dataType = 'anat';
-% dcm{6}.modality = 'T1w';
-% 
-% dcm{7}.folder = [cfg.rawDICOM filesep 't2_tse*'];
-% dcm{7}.dataType = 'anat';
-% dcm{7}.modality = 'T2w';
+% dcm{-}.acquisition
+% dcm{-}.run
+% dcm{-}.echo
+
+dcm{5}.folder = [cfg.rawDICOM filesep 'T1*']; 
+dcm{5}.dataType = 'anat';
+dcm{5}.modality = 'T1w';
+
+dcm{6}.folder = [cfg.rawDICOM filesep 't2_space_darkfluid_tra_p2_iso_2av*']; 
+dcm{6}.dataType = 'anat';
+dcm{6}.modality = 'T2w';
+dcm{6}.acquisition = 'acq-darkfluid';
+
+dcm{7}.folder = [cfg.rawDICOM filesep 't2_fl2d_tra_hemo*'];
+dcm{7}.dataType = 'anat';
+dcm{7}.modality = 'T2w';
+dcm{7}.acquisition = 'acq-hemo';
+
+
 % 
 % 
 % %% Fieldmaps
@@ -162,7 +185,7 @@ cfg.importTSV = false;
 % dcm{9}.dataType = 'dwi';
 % dcm{9}.modality = 'dwi';
 
-%% Spectroscopy
+%% Spectroscopy data:
 
 dcm{10}.folder = [cfg.rawDICOM filesep 'svs_se_30*'];
 dcm{10}.dataType = 'mrs';
@@ -172,4 +195,4 @@ dcm{10}.echo = 'echo-30';
 dcm{11}.folder = [cfg.rawDICOM filesep 'svs_se_135*'];
 dcm{11}.dataType = 'mrs';
 dcm{11}.modality = 'svs';
-dcm{11}.echo = 'echo-135';
+dcm{11}.echo = 'echo-135';  
