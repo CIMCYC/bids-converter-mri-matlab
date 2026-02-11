@@ -69,6 +69,7 @@ cfg.importTSV = false;
 %               - Anatomical:
 %                   - 'T1w':  T1-weighted data.
 %                   - 'T2w':  T2-weighted data.
+%                   - 'angio':Angiography sequences focus on enhancing the contrast of blood vessels
 %               - Functional:
 %                   - 'bold': Functional data.
 %               - Diffusion:
@@ -169,6 +170,16 @@ dcm{7}.folder = [cfg.rawDICOM filesep 't2_fl2d_tra_hemo*'];
 dcm{7}.dataType = 'anat';
 dcm{7}.modality = 'T2w';
 dcm{7}.acquisition = 'acq-hemo';
+
+dcm{8}.folder = [cfg.rawDICOM filesep 'tof_fl3d_tra_p3_2slab_CUELLO_MIP_SAG*'];
+dcm{8}.dataType = 'anat';
+dcm{8}.modality = 'angio';
+dcm{8}.acquisition = 'acq-cuellosag';
+
+dcm{9}.folder = [cfg.rawDICOM filesep 'tof_fl3d_tra_p3_2slab_CUELLO_MIP_COR*'];
+dcm{9}.dataType = 'anat';
+dcm{9}.modality = 'angio';
+dcm{9}.acquisition = 'acq-cuellocor';
 
 
 % 
