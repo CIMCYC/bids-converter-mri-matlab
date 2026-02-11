@@ -1,80 +1,39 @@
 function cmdout = dicomToBIDS(cfg, dcm)
+%% Directorios raw:
+% Retrieve the directories where the raw data to be converted are located.
 
-% Importante: Aquí necesitamos una/varias carpetas, no su contenido. Si en
-% dcm.folder tenemos una carpeta, al aplicarle el dir() estaremos listando
-% los archivos de su interior y eso no es lo que queremos. 
-
-% Nos aseguramos de que haya un asterisco al final para buscar 
-% coincidencias:
-
-if ~endsWith(dcm.folder, '*')
-    dcm.folder = [dcm.folder '*'];
-end
-
-allItems = dir(dcm.folder);
-dcmFolders = allItems([allItems.isdir]);
-
-% Mostramos un warning si hay varias carpetas que pasen el filtro del
-% nombre, el comportamiento ideal es que en cada celda del dcm tengamos
-% solo una ruta a la carpeta.
-
-if length(dcmFolders) > 1
-    warning('Possible error: More than one folder asociated to dcm.');
-end
+dcmFolders = getDCMFolders(dcm);
 
 for f = 1 : length(dcmFolders)
+    %% Directorios de salida:
+    % Generate the output directories, both for the data and for the
+    % derivatives if necessary.
 
-    % Convetimos en string por si hay espacios en el nombre
-    inFolder = string([dcmFolders(f).folder filesep dcmFolders(f).name]);
-    cfg.outFolder = string(cfg.outFolder);
+    cfg = generateOutputDirectories(cfg, dcmFolders(f));
 
-    % Creamos la carpeta de salida si no existe:
-    if ~exist(cfg.outFolder, 'dir')
-        mkdir(cfg.outFolder);
-    end
+    %% Construcción del comando de conversión:
+    % Build the command that will be executed via a system call. 
+    % We will call dcm2niix or spec2nii depending on the modality of the 
+    % data to be converted.
 
-    % Creamos la carpeta de derivatives si fuese necesario:
-    % if ~exist(cfg.derivativesFolder, 'dir')
-    %     mkdir(cfg.derivativesFolder);
-    % end
+    command = generateCommand(cfg, dcm);
 
-    %% Check dcm-nii converters:
-    % Comprobamos que los conversores de datos son accesibles desde el
-    % comando 
-    checkDataConverters();
+    %% Ejecución del comando de conversión:
+    % Make a system call to execute the previously generated command.
 
-    %% Construcción del comando:
-    if isfield(dcm, 'derivatives') && 0
-        command = sprintf('dcm2niix -f "%s" -z "%s" -o "%s" "%s"', ...
-            cfg.fileName, cfg.dataFormat, cfg.derivativeFolder, inFolder);
-    else
-        if strcmp(dcm.dataType,'mrs') 
-            command = sprintf('spec2nii auto "%s" -o "%s" -f "%s" -j', ...
-                inFolder, cfg.outFolder, cfg.fileName);
-        else
-            command = sprintf('dcm2niix -f "%s" -z "%s" -o "%s" "%s"', ...
-                cfg.fileName, cfg.dataFormat, cfg.outFolder, inFolder);
-        end
-    end
-
-    disp('Converting DICOM data from: ')
-    disp(inFolder)
-
-    % Ejecutar el comando
-    [status, cmdout] = system(command);
-
-    % Mostramos el resultado:
-    if status ~= 0
-        fprintf('Error ejecutando dcm2niix (status %d):\n%s\n', ...
-            status, cmdout);
-    else
-        disp('> Conversión completada correctamente.');
-    end
+    [~, cmdout] = runConversionCommand(cfg, command);
 
     %% Update taskName in sidecar JSON:
+    % If task data are present, we must update the task name in the 
+    % metadata JSON file to comply with the BIDS standard.
+
     updateTaskNameJSON(cfg, dcm);
 
     %% Rename BIDS converted files:
+    % In some cases, it is necessary to rename the converted files.
+    % For example, field maps require modification to comply with the BIDS 
+    % standard.
+
     renameBIDSConvertedFiles(cfg,dcm);
 
 end
