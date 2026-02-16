@@ -171,6 +171,7 @@ dcm{7}.dataType = 'anat';
 dcm{7}.modality = 'T2w';
 dcm{7}.acquisition = 'acq-hemo';
 
+%% Angio
 dcm{8}.folder = [cfg.rawDICOM filesep 'tof_fl3d_tra_p3_2slab_CUELLO_MIP_SAG*'];
 dcm{8}.dataType = 'anat';
 dcm{8}.modality = 'angio';
@@ -181,9 +182,45 @@ dcm{9}.dataType = 'anat';
 dcm{9}.modality = 'angio';
 dcm{9}.acquisition = 'acq-cuellocor';
 
+dcm{10}.folder = [cfg.rawDICOM filesep 'tof_fl3d_tra_p3_2slab_CUELLO_17*'];
+dcm{10}.dataType = 'anat';
+dcm{10}.modality = 'angio';
+dcm{10}.acquisition = 'acq-cuello';
 
-% 
-% 
+%% Spectroscopy data:
+
+dcm{11}.folder = [cfg.rawDICOM filesep 'svs_se_30*'];
+dcm{11}.dataType = 'mrs';
+dcm{11}.modality = 'svs';
+dcm{11}.echo = 'echo-30';
+
+dcm{12}.folder = [cfg.rawDICOM filesep 'svs_se_135*'];
+dcm{12}.dataType = 'mrs';
+dcm{12}.modality = 'svs';
+dcm{12}.echo = 'echo-135';  
+
+%% Arterial Spin Labeling
+
+dcm{13}.folder = [cfg.rawDICOM filesep 'tgse_pcasl_label1800ms_PLD1800ms*'];
+dcm{13}.dataType = 'perf';
+dcm{13}.modality = 'asl';
+
+% Extra information required. See your protocol file or ask to your RM 
+% technician.
+dcm{13}.M0Type = 'Absent'; % "Separate", "Included", "Estimate", "Absent".
+dcm{13}.PostLabelingDelay = 1.8;
+dcm{13}.BackgroundSuppression = false; % "true", "false".
+dcm{13}.TotalAcquiredPairs = 10;
+
+
+
+
+
+% dcm{13}.folder = [cfg.rawDICOM filesep 'svs_se_135*'];
+% dcm{13}.dataType = 'mrs';
+% dcm{13}.modality = 'svs';
+% dcm{13}.echo = 'echo-135';  
+
 % %% Fieldmaps
 % 
 % dcm{8}.folder = [cfg.rawDICOM filesep 'gre_field_mapping_33*'];
@@ -196,14 +233,4 @@ dcm{9}.acquisition = 'acq-cuellocor';
 % dcm{9}.dataType = 'dwi';
 % dcm{9}.modality = 'dwi';
 
-%% Spectroscopy data:
 
-dcm{10}.folder = [cfg.rawDICOM filesep 'svs_se_30*'];
-dcm{10}.dataType = 'mrs';
-dcm{10}.modality = 'svs';
-dcm{10}.echo = 'echo-30';
-
-dcm{11}.folder = [cfg.rawDICOM filesep 'svs_se_135*'];
-dcm{11}.dataType = 'mrs';
-dcm{11}.modality = 'svs';
-dcm{11}.echo = 'echo-135';  

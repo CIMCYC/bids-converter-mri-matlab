@@ -1,4 +1,4 @@
-function cmdout = dicomToBIDS(cfg, dcm)
+function dicomToBIDS(cfg, dcm)
 %% Directorios raw:
 % Retrieve the directories where the raw data to be converted are located.
 
@@ -21,7 +21,7 @@ for f = 1 : length(dcmFolders)
     %% Ejecución del comando de conversión:
     % Make a system call to execute the previously generated command.
 
-    [~, cmdout] = runConversionCommand(cfg, command);
+    runConversionCommand(cfg, command);
 
     %% Update taskName in sidecar JSON:
     % If task data are present, we must update the task name in the 
@@ -29,7 +29,14 @@ for f = 1 : length(dcmFolders)
 
     updateTaskNameJSON(cfg, dcm);
 
-    %% Rename BIDS converted files:
+    %% Arterial Spin Labeling extra steps:
+    % For Arterial Spin Labeling we must create the M0Type parameter in the 
+    % metadata JSON file to comply with the BIDS standard.
+
+    updateALSJSON(cfg, dcm); % Required parameters in the sidecar JSON.
+    generateASLContextFile(cfg, dcm); % % Generate context file.
+
+    %% Fiedmaps extra steps:
     % In some cases, it is necessary to rename the converted files.
     % For example, field maps require modification to comply with the BIDS 
     % standard.

@@ -43,15 +43,14 @@ for i = 1 : length (dcm)
         % This filename is generated based on the data provided for the
         % current folder (modality, task, run, events, etc.)
 
-        [cfg.fileName, cfg.eventsFileName] = generateBIDSFileName(...
-            cfg, dcm{i});
+        cfg = generateBIDSFileName(cfg, dcm{i});
 
         %% Convert DICOM - NIFTI:
         % Conversion routine. Here we will make system calls that convert 
         % the raw DICOM data into NIfTI format with file names and a 
         % structure compatible with the BIDS standard.
 
-        cfg.convertedFiles = dicomToBIDS(cfg, dcm{i});
+        dicomToBIDS(cfg, dcm{i});
 
         %% Import TSV:
         % If the data correspond to a task, we must also import the TSV 
