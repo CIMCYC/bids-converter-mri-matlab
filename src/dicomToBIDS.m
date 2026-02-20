@@ -2,7 +2,7 @@ function dicomToBIDS(cfg, dcm)
 %% Directorios raw:
 % Retrieve the directories where the raw data to be converted are located.
 
-dcmFolders = getDCMFolders(dcm);
+dcmFolders = getDCMFolders(cfg);
 
 for f = 1 : length(dcmFolders)
     %% Directorios de salida:

@@ -1,4 +1,4 @@
-function dcmFolders = getDCMFolders(dcm)
+function dcmFolders = getDCMFolders(cfg)
 % Importante: Aquí necesitamos una/varias carpetas, no su contenido. Si en
 % dcm.folder tenemos una carpeta, al aplicarle el dir() estaremos listando
 % los archivos de su interior y eso no es lo que queremos.
@@ -6,12 +6,12 @@ function dcmFolders = getDCMFolders(dcm)
 % Nos aseguramos de que haya un asterisco al final para buscar
 % coincidencias:
 
-if ~endsWith(dcm.folder, '*')
-    dcm.folder = [dcm.folder '*'];
+if ~endsWith(cfg.dicomFolder, '*')
+    cfg.dicomFolder = [cfg.dicomFolder '*'];
 end
 
 % Seleccionamos los directorios:
-allItems = dir(dcm.folder);
+allItems = dir(cfg.dicomFolder);
 dcmFolders = allItems([allItems.isdir]);
 
 %% Posible error:

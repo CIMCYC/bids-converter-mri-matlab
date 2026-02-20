@@ -1,4 +1,4 @@
-%% DATASET DESCRIPTION FILE (datasetDescriptionJSON.m)
+%% DATASET DESCRIPTION FILE (cfg_dataset_description.m)
 % -------------------------------------------------------------------------
 % Brain, Mind and Behavioral Research Center - University of Granada.
 % Contact: dlopez@ugr.es (David Lopez-Garcia)
@@ -28,9 +28,8 @@ datasetDescription.DatasetType = 'raw';
 
 %% License (RECOMMENDED) [type: string]
 % Description: The license for the dataset. The use of license name 
-% abbreviations is RECOMMENDED for specifying a license (see Appendix II). 
-% The corresponding full license text MAY be specified in an additional 
-% LICENSE file.
+% abbreviations is RECOMMENDED for specifying a license. The corresponding 
+% full license text MAY be specified in an additional LICENSE file.
 
 % List of included licenses and abbreviations:
 
