@@ -133,12 +133,12 @@ dcm{1}.modality = 'T1w';
 dcm{2}.folder = 't2_space_darkfluid_tra_p2_iso_2av*'; 
 dcm{2}.dataType = 'anat';
 dcm{2}.modality = 'T2w';
-dcm{2}.acquisition = 'acq-darkfluid';
+dcm{2}.acquisition = 'darkfluid';
 
 dcm{3}.folder = 't2_fl2d_tra_hemo*';
 dcm{3}.dataType = 'anat';
 dcm{3}.modality = 'T2w';
-dcm{3}.acquisition = 'acq-hemo';
+dcm{3}.acquisition = 'hemo';
 
 dcm{17}.folder = 'T2_5*';
 dcm{17}.dataType = 'anat';
@@ -149,57 +149,57 @@ dcm{17}.modality = 'T2w';
 dcm{4}.folder = 'tof_fl3d_tra_p3_2slab_CUELLO_MIP_SAG*';
 dcm{4}.dataType = 'anat';
 dcm{4}.modality = 'angio';
-dcm{4}.acquisition = 'acq-cuellosag';
+dcm{4}.acquisition = 'cuellosag';
 
 dcm{5}.folder = 'tof_fl3d_tra_p3_2slab_CUELLO_MIP_COR*';
 dcm{5}.dataType = 'anat';
 dcm{5}.modality = 'angio';
-dcm{5}.acquisition = 'acq-cuellocor';
+dcm{5}.acquisition = 'cuellocor';
 
 dcm{6}.folder = 'tof_fl3d_tra_p3_2slab_CUELLO_17*';
 dcm{6}.dataType = 'anat';
 dcm{6}.modality = 'angio';
-dcm{6}.acquisition = 'acq-cuello';
+dcm{6}.acquisition = 'cuello';
 
 %% FUNC: Task (including resting state) imaging data:
 
 dcm{7}.folder = 'ep2d_bold_p1_s4_resting_TR1500_PA*';
 dcm{7}.dataType = 'func';
 dcm{7}.modality = 'bold';
-dcm{7}.task = 'task-rest';
-dcm{7}.dir = 'dir-PA';
+dcm{7}.task = 'rest';
+dcm{7}.dir = 'PA';
 
 dcm{8}.folder = 'ep2d_bold_p1_s4_resting_TR1500_42*';
 dcm{8}.dataType = 'func';
 dcm{8}.modality = 'bold';
-dcm{8}.task = 'task-rest';
-dcm{8}.dir = 'dir-AP';
+dcm{8}.task = 'rest';
+dcm{8}.dir = 'AP';
 
 %% DWI: Diffusion imaging data
 
 dcm{9}.folder = 'Diff_B2k_d60_blip*';
 dcm{9}.dataType = 'dwi';
 dcm{9}.modality = 'dwi';
-dcm{9}.dir = 'dir-AP';
-dcm{9}.acquisition = 'acq-b2000';
+dcm{9}.dir = 'AP';
+dcm{9}.acquisition = 'b2000';
 
 dcm{10}.folder = 'Diff_B1k_d32_blip*';
 dcm{10}.dataType = 'dwi';
 dcm{10}.modality = 'dwi';
-dcm{10}.acquisition = 'acq-b1000';
-dcm{10}.dir = 'dir-AP';
+dcm{10}.acquisition = 'b1000';
+dcm{10}.dir = 'AP';
 
 dcm{11}.folder = 'Diff_B300_d8_28*';
 dcm{11}.dataType = 'dwi';
 dcm{11}.modality = 'dwi';
-dcm{11}.acquisition = 'acq-b300';
-dcm{11}.dir = 'dir-PA';
+dcm{11}.acquisition = 'b300';
+dcm{11}.dir = 'PA';
 
 dcm{12}.folder = 'Diff_B300_d8_blip*';
 dcm{12}.dataType = 'dwi';
 dcm{12}.modality = 'dwi';
-dcm{12}.acquisition = 'acq-b300';
-dcm{12}.dir = 'dir-AP';
+dcm{12}.acquisition = 'b300';
+dcm{12}.dir = 'AP';
 
 
 %% FMAP: Fieldmap data
@@ -213,12 +213,12 @@ dcm{13}.modality = 'fieldmap';
 dcm{14}.folder = 'svs_se_30*';
 dcm{14}.dataType = 'mrs';
 dcm{14}.modality = 'svs';
-dcm{14}.echo = 'echo-30';
+dcm{14}.echo = '30';
 
 dcm{15}.folder = 'svs_se_135*';
 dcm{15}.dataType = 'mrs';
 dcm{15}.modality = 'svs';
-dcm{15}.echo = 'echo-135';  
+dcm{15}.echo = '135';  
 
 %% PER: Perfusion: Arterial Spin Labeling (ALS)
 

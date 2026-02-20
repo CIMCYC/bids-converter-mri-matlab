@@ -20,23 +20,23 @@ if isfield(dcm, 'modality')
 end
 
 if isfield(dcm, 'task')
-    taskName  = dcm.task;
+    taskName  = ['task-' dcm.task];
 end
 
 if isfield(dcm, 'run')
-    runNumber  = dcm.run;
+    runNumber  = ['run-' dcm.run];
 end
 
 if isfield(dcm, 'dir')
-    direction  = dcm.dir;
+    direction  = ['dir-' dcm.dir];
 end
 
 if isfield(dcm, 'echo')
-    echo  = dcm.echo;
+    echo  = ['echo-' dcm.echo];
 end
 
 if isfield(dcm, 'acquisition')
-    acquisition  = dcm.acquisition;
+    acquisition  = ['acq-' dcm.acquisition];
 end
 
 
