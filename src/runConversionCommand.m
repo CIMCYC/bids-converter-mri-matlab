@@ -2,8 +2,10 @@ function [status, cmdout] = runConversionCommand(cfg,command)
 disp('Converting DICOM data from: ')
 disp(cfg.inFolder)
 
-% Ejecutamos la llamada al sistema:
-[status, cmdout] = system(command);
+% Ejecutamos las llamadas al sistema:
+for i = 1 : length(command)
+    [status, cmdout] = system(command{i});
+end
 
 % Mostramos el resultado:
 if status ~= 0

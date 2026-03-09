@@ -32,6 +32,15 @@ cfg.sessionName = '';
 
 cfg.dataFormat = 'y';
 
+%% BIDS - Anonymization:
+% Description: Delete personal information in JSON metadata (sex, name, id 
+% date of birth, size, weight, age, etc):
+%
+% - 'n' for including personal information.
+% - 'y' for removing personal information.
+
+cfg.anonymization = 'y';
+
 %% BIDS - Output directory:
 % Description: Main directory of your BIDS compatible project.
 
