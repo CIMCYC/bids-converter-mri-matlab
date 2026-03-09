@@ -140,7 +140,7 @@ dcm{3}.dataType = 'anat';
 dcm{3}.modality = 'T2w';
 dcm{3}.acquisition = 'hemo';
 
-dcm{17}.folder = 'T2_5*';
+dcm{17}.folder = 'T2*';
 dcm{17}.dataType = 'anat';
 dcm{17}.modality = 'T2w';
 
@@ -156,7 +156,7 @@ dcm{5}.dataType = 'anat';
 dcm{5}.modality = 'angio';
 dcm{5}.acquisition = 'cuellocor';
 
-dcm{6}.folder = 'tof_fl3d_tra_p3_2slab_CUELLO_17*';
+dcm{6}.folder = 'tof_fl3d_tra_p3_2slab_CUELLO*';
 dcm{6}.dataType = 'anat';
 dcm{6}.modality = 'angio';
 dcm{6}.acquisition = 'cuello';
@@ -169,7 +169,7 @@ dcm{7}.modality = 'bold';
 dcm{7}.task = 'rest';
 dcm{7}.dir = 'PA';
 
-dcm{8}.folder = 'ep2d_bold_p1_s4_resting_TR1500_42*';
+dcm{8}.folder = 'ep2d_bold_p1_s4_resting_TR1500*';
 dcm{8}.dataType = 'func';
 dcm{8}.modality = 'bold';
 dcm{8}.task = 'rest';
@@ -189,7 +189,7 @@ dcm{10}.modality = 'dwi';
 dcm{10}.acquisition = 'b1000';
 dcm{10}.dir = 'AP';
 
-dcm{11}.folder = 'Diff_B300_d8_28*';
+dcm{11}.folder = 'Diff_B300_d8*';
 dcm{11}.dataType = 'dwi';
 dcm{11}.modality = 'dwi';
 dcm{11}.acquisition = 'b300';
