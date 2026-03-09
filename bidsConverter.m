@@ -30,14 +30,14 @@ for i = 1 : subjects.n
 
     for j = 1 : length (dcm)
         %% DICOM folder:
-        % Original DICOM folder to convert:
-        cfg.dicomFolder = [subjects.paths{i} filesep dcm{j}.folder];
-
-        if ~isempty(dcm{j}) && ~isempty(dir(cfg.dicomFolder))
+        if ~isempty(dcm{j})
             %% Output folder:
             % Define the output path so that it complies with the BIDS
             % standard. The hierarchy should be:
             % Subject > Session > Data type.
+            
+            % Original DICOM folder to convert:
+            cfg.dicomFolder = [subjects.paths{i} filesep dcm{j}.folder];
 
             cfg.outFolder = [cfg.outputDirectory filesep cfg.subjectId ...
                 filesep cfg.sessionName filesep dcm{j}.dataType];
