@@ -10,8 +10,10 @@ else
         % más archivos .dcm habría que implementar un bucle generando
         % comandos para cada archivo. Suponemos por ahora que cada carpeta
         % solo tiene un .dcm de espectroscopia que convertir. 
-        
+
         listOfFiles = dir(fullfile(cfg.inFolder, '*.dcm'));
+        listOfFiles = listOfFiles(~startsWith({listOfFiles.name}, '.'));
+        
         if ~isempty(listOfFiles)
             cfg.inFolder = fullfile(listOfFiles(1).folder, listOfFiles(1).name);
         end
