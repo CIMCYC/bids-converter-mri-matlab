@@ -23,11 +23,13 @@ if length(dcmFolders) > 1
     [~, idx] = sort({dcmFolders.name});
     dcmFolders = dcmFolders(idx);
     
-    % Aviso
-    warning('Multiple folders matched. Using the first one after sorting.');
-    
     % Quedarse solo con la primera
     dcmFolders = dcmFolders(1);
+
+    % Aviso
+    fprintf('   - <strong>Warning:</strong> Multiple folders matched. ');
+    fprintf('Using the first one after sorting: \n');
+    
 end
 
 end

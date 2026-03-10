@@ -24,10 +24,13 @@ initializeBIDSDataset(cfg, datasetDescription);
 subjects = getSubjectsList(cfg);
 
 %% DICOM to NIFTI.
+fprintf('\n<strong>Starting NIFTI-BIDS conversion: </strong> \n');
+
 % Conversion routine:
 for i = 1 : subjects.n
     cfg.subjectId = subjects.ids{i};
-
+    fprintf(['\n <strong> > Subject id: </strong>' cfg.subjectId '\n'])
+    
     for j = 1 : length (dcm)
         %% DICOM folder:
         if ~isempty(dcm{j})
@@ -64,3 +67,5 @@ for i = 1 : subjects.n
         end
     end
 end
+ 
+fprintf('\n<strong>Conversion completed! </strong> \n');

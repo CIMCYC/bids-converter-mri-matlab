@@ -14,6 +14,8 @@
 %  Vamos a verificar si podemos acceder a los conversores desde el system
 %  de MATLAB. Debemos hacerlo para los distintos sistemas operativos.
 
+fprintf('<strong>Checking data converters: </strong> \n');
+
 if ispc
     [dcm_status_check, dcm_cmdout_check] = system('where dcm2niix');
     [spe_status_check, spe_cmdout_check] = system('where spec2nii');
@@ -27,15 +29,15 @@ end
 %  accesible por el programa.
 
 if dcm_status_check ~= 0
-    warning('dcm2niix no se encuentra en el PATH. cmdout: %s', ...
-        dcm_cmdout_check);
+    fprintf('  - <strong>Warning:</strong> dcm2niix is not accesible. \n');
+    fprintf(['  - <strong>CMDOUT:</strong>' dcm_cmdout_check '/n']);
 else
-    disp('Data converter dcm2niix > OK');
+    fprintf('  - Data converter dcm2niix > <strong>OK</strong> \n');
 end
 
 if spe_status_check ~= 0
-    warning('spec2nii no se encuentra en el PATH. cmdout: %s', ...
-        spe_cmdout_check);
+    fprintf('  - <strong>Warning:</strong> spec2nii is not accesible. \n');
+    fprintf(['  - <strong>CMDOUT:</strong>' dcm_cmdout_check '/n']);
 else
-    disp('Data converter spec2nii > OK');
+    fprintf('  - Data converter spec2nii > <strong>OK</strong> \n');
 end

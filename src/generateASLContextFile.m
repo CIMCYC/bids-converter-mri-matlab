@@ -44,7 +44,7 @@ if strcmp(dcm.dataType, 'perf') && strcmp(dcm.modality, 'asl')
     % Cerramos el archivo una vez escrito:
     fclose(fid);
 
-    disp('Archivo aslcontext generado correctamente');
+    fprintf('     > ASL context file generated \n');
 
 end
 end

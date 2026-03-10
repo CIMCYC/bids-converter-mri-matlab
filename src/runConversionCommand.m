@@ -1,6 +1,8 @@
 function [status, cmdout] = runConversionCommand(cfg,command)
-disp('Converting DICOM data from: ')
-disp(cfg.inFolder)
+
+% Show progress:
+[~, folderName] = fileparts(cfg.inFolder);
+fprintf(['   - DCM Folder: ' char(folderName) '>']);
 
 % Ejecutamos las llamadas al sistema:
 for i = 1 : length(command)
@@ -9,10 +11,10 @@ end
 
 % Mostramos el resultado:
 if status ~= 0
-    fprintf('Error ejecutando la conversión (status %d):\n%s\n', ...
-        status, cmdout);
+    fprintf('<strong> ERROR </strong> \n');
+    fprintf('(status %d):\n%s\n', status, cmdout);
 else
-    disp('> Conversión completada correctamente.');
+    fprintf('<strong> OK </strong> \n');
 end
 end
 
