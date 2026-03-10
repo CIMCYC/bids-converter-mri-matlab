@@ -1,16 +1,14 @@
 %% Rutas a los conversores externos:
 %  Rutas a los paquetes externos necesarios para poder hacer la conversión
 %  de DICOM a NIFTI. Estos dos paquetes deben estar instalados en el equipo
-%  y deben añadirse al path de MATLAB para que sean accesibles desde el
-%  comando system:
+%  y deben ser accesibles desde la llamada al sistema con el comando system
+%  de MATLAB.
 
-%% Paquete dcm2niix: Necesario para todas las conversiones.
-%  Añadimos la ruta al path de MATLAB:
-addpath('C:\Program Files\dcm2niix_win\');
+%% Añadimos carpetas contenedoras al PATH:
+%  Añadimos la ruta tanto del paquete dcm2niix como spec2nii:
 
-%% Paquete spec2nii: Necesario para datos de espectroscopía.
-%  Añadimos la ruta al path de MATLAB:
-addpath('C:\Users\David\AppData\Local\Python\pythoncore-3.14-64\Scripts\');
+% Linux (configuración para myccu3.ugr.es)
+% setenv('PATH', [getenv('PATH') ':/usr/local/fsl/bin']);
 
 %% Verificar acceso
 %  Vamos a verificar si podemos acceder a los conversores desde el system
