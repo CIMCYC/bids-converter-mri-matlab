@@ -50,6 +50,7 @@ cfg.generateDatasetDescriptionFile = true;
 cfg.generateREADMEFile = true;
 cfg.generateLicenseFile = true;
 cfg.generateChangesFile = true;
+cfg.generateBIDSIgnoreFile = true;
 
 %% RAW - DICOM directory:
 % Description: Folder containing RAW data:
@@ -83,6 +84,7 @@ cfg.importTSV = false;
 %                   - 'T1w':  T1-weighted data.
 %                   - 'T2w':  T2-weighted data.
 %                   - 'angio': Angiography data.
+%                   - 'swi': Susceptibility Weighted Imaging.
 %               - For functional data:
 %                   - 'bold': Functional data.
 %               - For diffusion data:
