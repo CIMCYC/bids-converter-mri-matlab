@@ -41,7 +41,7 @@ if isfield(dcm, 'acquisition')
 end
 
 if isfield(dcm, 'reconstruction')
-    acquisition  = ['acq-' dcm.reconstruction];
+    reconstruction  = ['rec-' dcm.reconstruction];
 end
 
 
