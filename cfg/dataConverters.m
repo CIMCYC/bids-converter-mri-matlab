@@ -30,14 +30,14 @@ end
 
 if dcm_status_check ~= 0
     fprintf('  - <strong>Warning:</strong> dcm2niix is not accesible. \n');
-    fprintf(['  - <strong>CMDOUT:</strong>' dcm_cmdout_check '/n']);
+    fprintf(['  - <strong>CMDOUT:</strong>' dcm_cmdout_check '\n']);
 else
     fprintf('  - Data converter dcm2niix > <strong>OK</strong> \n');
 end
 
 if spe_status_check ~= 0
     fprintf('  - <strong>Warning:</strong> spec2nii is not accesible. \n');
-    fprintf(['  - <strong>CMDOUT:</strong>' dcm_cmdout_check '/n']);
+    fprintf(['  - <strong>CMDOUT:</strong>' spe_cmdout_check '\n']);
 else
     fprintf('  - Data converter spec2nii > <strong>OK</strong> \n');
 end
