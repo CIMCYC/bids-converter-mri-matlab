@@ -49,6 +49,13 @@ for f = 1 : length(dcmFolders)
 
     renameBIDSConvertedFiles(cfg,dcm);
 
+    %% B0 field mapping extra steps:
+    % For func/dwi data we add the B0FieldSource field to the sidecar JSON
+    % when an fmap identifier is provided. For fmap data we add the
+    % B0FieldIdentifier field to the phasediff sidecar JSON.
+
+    updateB0FieldJSON(cfg, dcm);
+
 end
 
 end
