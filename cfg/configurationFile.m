@@ -141,9 +141,20 @@ cfg.importTSV = false;
 %         Please note that the <index> denotes the number/index (in the 
 %         form of a nonnegative integer), not the "EchoTime" value of the 
 %         separate JSON file.
-% - [optional] RECONSTRUCTION: The rec-<label> entity can be used to 
+% - [optional] RECONSTRUCTION: The rec-<label> entity can be used to
 %         distinguish different reconstruction algorithms.
-% - EVENTS: 
+% - [optional] FMAPID: For func/dwi data, label of the fmap that should be
+%         applied to correct B0 inhomogeneities. The value is written to
+%         the sidecar JSON as the BIDS "B0FieldSource" field, and must
+%         match the "B0FieldIdentifier" defined for the corresponding fmap.
+%         Example:
+%               - dcm{i}.fmapid = 'fmap_run1';
+% - [optional] IDENTIFIER: For fmap data, label that uniquely identifies
+%         this fmap. The value is written to the phasediff sidecar JSON as
+%         the BIDS "B0FieldIdentifier" field.
+%         Example:
+%               - dcm{i}.identifier = 'fmap_run1';
+% - EVENTS:
 %
 
 %% ANAT: Anatomy imaging data:
