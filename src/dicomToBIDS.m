@@ -29,6 +29,12 @@ for f = 1 : length(dcmFolders)
 
     updateTaskNameJSON(cfg, dcm);
 
+    %% Phase data extra steps:
+    % For phase reconstructions we must add the Units field to the
+    % metadata JSON file to comply with the BIDS standard.
+
+    updatePhaseUnitsJSON(cfg, dcm);
+
     %% Arterial Spin Labeling extra steps:
     % For Arterial Spin Labeling we must create the M0Type parameter in the 
     % metadata JSON file to comply with the BIDS standard.
