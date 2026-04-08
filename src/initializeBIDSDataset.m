@@ -2,7 +2,7 @@ function initializeBIDSDataset(cfg, datasetDescription)
 
 fprintf('\n<strong>Initializing BIDS dataset: </strong> \n');
 
-% Creamos la carpeta de salida si no existe:
+% Create the output folder if it does not exist:
 if ~exist(cfg.outputDirectory, 'dir')
     mkdir(cfg.outputDirectory);
 end

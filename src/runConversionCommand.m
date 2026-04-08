@@ -4,12 +4,12 @@ function [status, cmdout] = runConversionCommand(cfg,command)
 [~, folderName] = fileparts(cfg.inFolder);
 fprintf(['   - DCM Folder: ' char(folderName) '>']);
 
-% Ejecutamos las llamadas al sistema:
+% Execute the system calls:
 for i = 1 : length(command)
     [status, cmdout] = system(command{i});
 end
 
-% Mostramos el resultado:
+% Show the result:
 if status ~= 0
     fprintf('<strong> ERROR </strong> \n');
     fprintf('(status %d):\n%s\n', status, cmdout);

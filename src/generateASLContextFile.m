@@ -1,8 +1,8 @@
 function generateASLContextFile(cfg, dcm)
 if strcmp(dcm.dataType, 'perf') && strcmp(dcm.modality, 'asl')
-    %% Generación de la secuencia control-label.
-    % Importante: Asumimos que la secuencia comienza siempre por un "control"
-    % seguido de un "label" que es el patrón estándar Siemens/PCASL.
+    %% Build the control-label sequence.
+    % Important: We assume that the sequence always starts with a "control"
+    % followed by a "label", which is the standard Siemens/PCASL pattern.
 
     nVolumes = dcm.TotalAcquiredPairs * 2;
     context = strings(nVolumes, 1);
@@ -13,35 +13,35 @@ if strcmp(dcm.dataType, 'perf') && strcmp(dcm.modality, 'asl')
         context(idx+1) = "label";
     end
 
-    %% Añadimos el M0scan.
-    % Importante: Asumimos además que de incluirse el volumen correspondiente
-    % al M0, este se encontrará al final de la secuencia. Si ese no fuese el
-    % caso, es necesario modificar la secuencia.
+    %% Append the M0scan.
+    % Important: We also assume that, if the M0 volume is included, it
+    % will be located at the end of the sequence. If that is not the
+    % case, the sequence must be modified.
 
     if strcmp(dcm.M0Type,'Included')
         context = [context; "m0scan"];
     end
 
-    %% Generación del archivo TSV.
-    % En primer lugar, generamos la ruta completa:
+    %% Generate the TSV file.
+    % First, build the full output path:
 
     outputFilePath = fullfile(cfg.outFolder, cfg.contextFileName);
 
-    % Escribimos el archivo
+    % Write the file
     fid = fopen(outputFilePath, 'w');
     if fid == -1
-        error('No se pudo crear el archivo: %s', outputFilePath);
+        error('Could not create file: %s', outputFilePath);
     end
 
-    % Añadimos el header volume_type requerido en el estándar BIDS:
+    % Add the volume_type header required by the BIDS standard:
     fprintf(fid, 'volume_type\n');
 
-    % Escribimos el contenido en el archivo:
+    % Write the contents to the file:
     for i = 1:length(context)
         fprintf(fid, '%s\n', context(i));
     end
 
-    % Cerramos el archivo una vez escrito:
+    % Close the file once written:
     fclose(fid);
 
     fprintf('     > ASL context file generated \n');

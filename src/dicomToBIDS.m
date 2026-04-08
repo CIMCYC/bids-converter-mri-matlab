@@ -1,24 +1,24 @@
 function dicomToBIDS(cfg, dcm)
-%% Directorios raw:
+%% Raw directories:
 % Retrieve the directories where the raw data to be converted are located.
 
 dcmFolders = getDCMFolders(cfg);
 
 for f = 1 : length(dcmFolders)
-    %% Directorios de salida:
+    %% Output directories:
     % Generate the output directories, both for the data and for the
     % derivatives if necessary.
 
     cfg = generateOutputDirectories(cfg, dcmFolders(f));
 
-    %% Construcción del comando de conversión:
-    % Build the command that will be executed via a system call. 
-    % We will call dcm2niix or spec2nii depending on the modality of the 
+    %% Build the conversion command:
+    % Build the command that will be executed via a system call.
+    % We will call dcm2niix or spec2nii depending on the modality of the
     % data to be converted.
 
     command = generateCommand(cfg, dcm);
 
-    %% Ejecución del comando de conversión:
+    %% Run the conversion command:
     % Make a system call to execute the previously generated command.
 
     runConversionCommand(cfg, command);

@@ -1,35 +1,35 @@
 function dcmFolders = getDCMFolders(cfg)
-% Importante: Aquí necesitamos una/varias carpetas, no su contenido. Si en
-% dcm.folder tenemos una carpeta, al aplicarle el dir() estaremos listando
-% los archivos de su interior y eso no es lo que queremos.
+% Important: Here we need one or more folders, not their contents. If
+% dcm.folder is a folder, applying dir() to it would list the files
+% inside it, which is not what we want.
 
-% Nos aseguramos de que haya un asterisco al final para buscar 
-% coincidencias:
+% Make sure there is an asterisk at the end so that we can search for
+% matches:
 if ~endsWith(cfg.dicomFolder, '*')
     cfg.dicomFolder = [cfg.dicomFolder '*'];
 end
 
-% Seleccionamos los directorios
+% Select the directories
 allItems = dir(cfg.dicomFolder);
 dcmFolders = allItems([allItems.isdir]);
 
-% Eliminamos '.' y '..' si aparecen
+% Remove '.' and '..' if they appear
 dcmFolders = dcmFolders(~ismember({dcmFolders.name}, {'.','..'}));
 
-% Si hay varias coincidencias, ordenamos y nos quedamos con la primera
+% If there are several matches, sort them and keep the first one
 if length(dcmFolders) > 1
-    
-    % Ordenar por nombre
+
+    % Sort by name
     [~, idx] = sort({dcmFolders.name});
     dcmFolders = dcmFolders(idx);
-    
-    % Quedarse solo con la primera
+
+    % Keep only the first one
     dcmFolders = dcmFolders(1);
 
-    % Aviso
+    % Warning
     fprintf('   - <strong>Warning:</strong> Multiple folders matched. ');
     fprintf('Using the first one after sorting: \n');
-    
+
 end
 
 end

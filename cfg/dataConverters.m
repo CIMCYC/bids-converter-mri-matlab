@@ -1,18 +1,17 @@
-%% Rutas a los conversores externos:
-%  Rutas a los paquetes externos necesarios para poder hacer la conversión
-%  de DICOM a NIFTI. Estos dos paquetes deben estar instalados en el equipo
-%  y deben ser accesibles desde la llamada al sistema con el comando system
-%  de MATLAB.
+%% Paths to external converters:
+%  Paths to the external packages required to perform the DICOM to NIFTI
+%  conversion. Both packages must be installed on the machine and must be
+%  accessible from a system call via the MATLAB system command.
 
-%% Añadimos carpetas contenedoras al PATH:
-%  Añadimos la ruta tanto del paquete dcm2niix como spec2nii:
+%% Add containing folders to the PATH:
+%  Add the path of both the dcm2niix and spec2nii packages:
 
-% Linux (configuración para myccu3.ugr.es)
 % setenv('PATH', [getenv('PATH') ':/usr/local/fsl/bin']);
+% Linux (configuration for myccu3.ugr.es)
 
-%% Verificar acceso
-%  Vamos a verificar si podemos acceder a los conversores desde el system
-%  de MATLAB. Debemos hacerlo para los distintos sistemas operativos.
+%% Verify access
+%  Check whether we can access the converters from MATLAB's system call.
+%  This must be done for the different operating systems.
 
 fprintf('<strong>Checking data converters: </strong> \n');
 
@@ -24,9 +23,9 @@ else
     [spe_status_check, spe_cmdout_check] = system('which spec2nii');
 end
 
-%% Notificar
-%  Enviar un warning al usuario si alguno de los dos conversores no es
-%  accesible por el programa.
+%% Notify
+%  Issue a warning to the user if either of the two converters is not
+%  accessible by the program.
 
 if dcm_status_check ~= 0
     fprintf('  - <strong>Warning:</strong> dcm2niix is not accesible. \n');

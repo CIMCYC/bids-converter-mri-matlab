@@ -2,16 +2,16 @@ function updatePhaseUnitsJSON(cfg,dcm)
 
 jsonPath = '';
 
-% Caso 1: carpeta marcada explícitamente como fase (dcm.part = 'phase').
+% Case 1: folder explicitly marked as phase (dcm.part = 'phase').
 if isfield(dcm, 'part') && strcmp(dcm.part, 'phase')
     jsonFiles = dir(fullfile(cfg.outFolder, cfg.fileName + "*.json"));
     if ~isempty(jsonFiles)
         jsonPath = fullfile(jsonFiles(1).folder, jsonFiles(1).name);
     end
 
-% Caso 2: SBRef que además contiene el volumen de fase. dcm2niix añade el
-% sufijo _ph al archivo de fase, así que comprobamos su existencia igual
-% que se hace en renameBIDSConvertedFiles.m para los SBRef.
+% Case 2: SBRef that also contains the phase volume. dcm2niix appends the
+% _ph suffix to the phase file, so we check for its existence in the same
+% way it is done in renameBIDSConvertedFiles.m for SBRef data.
 elseif isfield(dcm, 'modality') && strcmp(dcm.modality, 'sbref')
     switch cfg.dataFormat
         case 'y', ext = ".nii.gz";

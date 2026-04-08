@@ -51,11 +51,11 @@ end
 
 
 %% Generate the file depending on dataType name:
-% El estándar BIDS define una estructura a la hora de nombrar los archivos
-% que depende del tipo de dato. Desglosamos las modalidades disponibles
-% actualmente en la herramienta.
-% Nota: En caso de introducir un nuevo parámetro revisar en que orden debe
-% aparecer para cada una de las modalidades.
+% The BIDS standard defines a file naming structure that depends on the
+% data type. We break down the modalities currently available in the
+% tool.
+% Note: When introducing a new parameter, check the order in which it
+% must appear for each of the modalities.
 
 if strcmp(dataType,'func')
 

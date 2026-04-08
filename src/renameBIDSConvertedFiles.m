@@ -24,94 +24,93 @@ if strcmp(dcm.dataType, 'fmap')
             continue; % Skip if suffix is unknown
         end
 
-        % Eliminamos los caracteres duplicados:
+        % Remove duplicated characters:
         newBase = removeDuplicateChar(newBase, '_');
 
-        % Definimos los path a los archivos antiguos:
+        % Define paths to the old files:
         oldJsonPath = fullfile(file.folder, file.name);
         oldNiiPath = oldJsonPath(1:end-5) + ext;
 
-        % Definimos las rutas a los archivos renombrados:
+        % Define paths to the renamed files:
         newJsonPath = fullfile(file.folder, newBase + ".json");
         newNiiPath = fullfile(file.folder, newBase + ext);
 
-        % Renombramos los archivos:
+        % Rename the files:
         movefile(oldJsonPath, newJsonPath);
         movefile(oldNiiPath, newNiiPath);
     end
 end
 
-%% Renombramos las series de fase:
-% Cuando estamos convirtiendo la fase de la señal y no la magnitud, el
-% conversor dcm2niix le añade siempre el prefijo _ph al archivo convertido.
-% Esto no es compatible con BIDS, ya que la fase se codifica en la entidad
-% part-pha del nombre.
+%% Rename phase series:
+% When converting the phase of the signal instead of the magnitude,
+% dcm2niix always adds the _ph prefix to the converted file. This is not
+% BIDS compatible, since the phase is encoded in the part-pha entity of
+% the filename.
 
 if isfield(dcm, 'part') && strcmp(dcm.part, 'phase')
 
-    % Definimos los path a los archivos antiguos:
+    % Define paths to the old files:
     oldJsonPath = fullfile(cfg.outFolder, cfg.fileName + "_ph.json");
     oldNiiPath = fullfile(cfg.outFolder, cfg.fileName + "_ph" + ext);
 
-    % Definimos las rutas a los archivos renombrados:
+    % Define paths to the renamed files:
     newJsonPath = fullfile(cfg.outFolder, cfg.fileName + ".json");
     newNiiPath = fullfile(cfg.outFolder, cfg.fileName + ext);
 
-    % Renombramos los archivos:
+    % Rename the files:
     movefile(oldJsonPath, newJsonPath);
     movefile(oldNiiPath, newNiiPath);
 
 end
 
-%% Renombramos las imágenes SBRef:
-% En caso de almacenar la fase, los carpeta SBRef contiene dos volúmenes, 
-% uno para la magnitud y otro para la fase. El conversor dcm2niix en caso
-% de encontrar las dos imágenes las convierte y añade el sufijo _ph al
-% archivo de fase.
+%% Rename SBRef images:
+% When the phase is also stored, the SBRef folder contains two volumes,
+% one for the magnitude and one for the phase. If dcm2niix finds both
+% images, it converts them and appends the _ph suffix to the phase file.
 
 if strcmp(dcm.modality, 'sbref')
 
-    % Buscamos el archivo con el sufijo _ph. En caso de encontrarlo podemos
-    % asumir que se está almacenando la fase, en caso de no encontrarlo
-    % asuminos que no, por lo que no tendríamos que hacer nada:
+    % Look for the file with the _ph suffix. If we find it we can assume
+    % that the phase is being stored; otherwise, we assume it is not and
+    % we do not need to do anything:
 
     phaseFile = fullfile(cfg.outFolder, cfg.fileName + "_ph" + ext);
-    
+
     if exist(phaseFile, "file")
 
-        % ARCHIVOS DE MAGNITUD:
+        % MAGNITUDE FILES:
 
-        % Generamos el nuevo nombre del archivo de magnitud:
+        % Build the new name for the magnitude file:
         dcm.part = 'mag';
         cfg_ = generateBIDSFileName(cfg,dcm);
-        
-        % Definimos los path a los archivos antiguos:
+
+        % Define paths to the old files:
         oldJsonPath = fullfile(cfg.outFolder, cfg.fileName + ".json");
         oldNiiPath = fullfile(cfg.outFolder, cfg.fileName  + ext);
 
-        % Definimos las rutas a los archivos renombrados:
+        % Define paths to the renamed files:
         newJsonPath = fullfile(cfg.outFolder, cfg_.fileName + ".json");
         newNiiPath = fullfile(cfg.outFolder, cfg_.fileName + ext);
-        
-        % Renombramos los archivos:
+
+        % Rename the files:
         movefile(oldJsonPath, newJsonPath);
         movefile(oldNiiPath, newNiiPath);
 
-        % ARCHIVOS DE FASE:
+        % PHASE FILES:
 
-        % Generamos el nuevo nombre del archivo de fase:
+        % Build the new name for the phase file:
         dcm.part = 'phase';
         cfg_ = generateBIDSFileName(cfg,dcm);
 
-        % Definimos los path a los archivos antiguos:
+        % Define paths to the old files:
         oldJsonPath = fullfile(cfg.outFolder, cfg.fileName + "_ph.json");
         oldNiiPath = fullfile(cfg.outFolder, cfg.fileName + "_ph" + ext);
 
-        % Definimos las rutas a los archivos renombrados:
+        % Define paths to the renamed files:
         newJsonPath = fullfile(cfg.outFolder, cfg_.fileName + ".json");
         newNiiPath = fullfile(cfg.outFolder, cfg_.fileName + ext);
 
-        % Renombramos los archivos:
+        % Rename the files:
         movefile(oldJsonPath, newJsonPath);
         movefile(oldNiiPath, newNiiPath);
     end

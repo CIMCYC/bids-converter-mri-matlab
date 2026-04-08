@@ -1,11 +1,11 @@
 function subjects = getSubjectsList(cfg)
 % DISCOVER_BIDS_SUBJECTS
-% Busca subcarpetas de participantes en una carpeta raíz.
+% Searches for participant subfolders inside a root folder.
 %
-% Cada subcarpeta:
-%   - debe ser directorio
-%   - no puede ser '.' ni '..'
-%   - el nombre será el subject ID
+% Each subfolder:
+%   - must be a directory
+%   - cannot be '.' or '..'
+%   - the name will be used as the subject ID
 %
 % OUTPUT:
 %   subjects.root
@@ -13,46 +13,44 @@ function subjects = getSubjectsList(cfg)
 %   subjects.paths
 %   subjects.n
 
-%% Validar carpeta raíz:
-% Comporbamos que la carpeta proporcionada existe y realmente sea una
-% carpeta.
+%% Validate root folder:
+% Check that the provided folder exists and is actually a folder.
 
 root_dir = cfg.rawDICOM;
 
 if ~isfolder(root_dir)
-    error('La ruta proporcionada no existe o no es una carpeta:\n%s', root_dir)
+    error('The provided path does not exist or is not a folder:\n%s', root_dir)
 end
 
 root_dir = char(root_dir);
 
-%% Listamos el contenido:
-% Listamos el contenido completo de la carpeta. Además, eliminamos las
-% entradas que contienen '.' y '..' muy comunes. Comporbamos además que la
-% carpeta no esté vacía.
+%% List the contents:
+% List the full contents of the folder. We also remove the very common
+% '.' and '..' entries. Additionally, we check that the folder is not
+% empty.
 
 subjectsList = dir(root_dir);
 subjectsList = subjectsList(~ismember({subjectsList.name}, {'.','..'}));
 
 if isempty(subjectsList)
-    error('La carpeta está vacía: %s', root_dir)
+    error('The folder is empty: %s', root_dir)
 end
 
-%% Filtramos solo directorios:
-% Nos quedamos solo con los directorios, eliminando posibles archivos
-% contenidos en la carpeta raíz que no se correspondan con carpetas de
-% participantes.
+%% Keep only directories:
+% Keep only the directories, removing any files contained in the root
+% folder that do not correspond to participant folders.
 
 is_dir = [subjectsList.isdir];
 subjectsList = subjectsList(is_dir);
 
 if isempty(subjectsList)
-    error('No se encontraron subcarpetas de participantes en: %s', root_dir)
+    error('No participant subfolders were found in: %s', root_dir)
 end
 
-%% Comporbamos que los nombres de los sujetos son válidos.
-% El nombre de cada carpeta se usará como subject ID para los datos
-% transformados a BIDS. Por este motivo, debemos comprobar que los
-% caracteres sean alfanuméricos (debemos evitar el uso de - o _).
+%% Check that the subject names are valid.
+% The name of each folder will be used as the subject ID for the data
+% transformed to BIDS. For this reason, we must check that the
+% characters are alphanumeric (we must avoid the use of - or _).
 
 subjectIDs = {};
 subjectPaths = {};
@@ -61,41 +59,41 @@ for i = 1:numel(subjectsList)
 
     subjectName = subjectsList(i).name;
 
-    % Evitar carpetas ocultas tipo .DS_Store o .git
+    % Skip hidden folders such as .DS_Store or .git
     if startsWith(subjectName, '.')
         continue
     end
 
-    % Generamos la ruta completa a la carpeta del participante.
+    % Build the full path to the participant folder.
     subjectPath = fullfile(root_dir, subjectName);
 
-    % Comprobación extra robusta
+    % Extra robust check
     if ~isfolder(subjectPath)
         continue
     end
 
-    % Validar nombre BIDS-compatible
+    % Validate BIDS-compatible name
     validateSubjectName(subjectName)
 
-    % Almacenamos el nombre y el path del participante.
+    % Store the participant's name and path.
     subjectIDs{end+1} = ['sub-' subjectName];
     subjectPaths{end+1} = [subjectPath filesep cfg.ip];
 
 end
 
-%% Comprobaciones finales:
-% Realizamos algunas comprobaciones finales como que existan rutas válidas
-% para los participantes o que no existan nombres repetidos de los mismos.
+%% Final checks:
+% Perform some final checks, such as making sure that there are valid
+% paths for the participants and that there are no duplicated names.
 
 if isempty(subjectIDs)
-    error('No se encontraron carpetas válidas de participantes.')
+    error('No valid participant folders were found.')
 end
 
 if numel(unique(subjectIDs)) ~= numel(subjectIDs)
-    error('Hay IDs de sujeto duplicados.')
+    error('Duplicated subject IDs found.')
 end
 
-%% Creamos estructura de salida
+%% Build the output structure
 
 subjects = struct();
 subjects.root = root_dir;
@@ -105,11 +103,11 @@ subjects.n = numel(subjectIDs);
 
 end
 
-%% Función de validación alfanumérica:
+%% Alphanumeric validation function:
 function validateSubjectName(name)
 if isempty(regexp(name, '^[a-zA-Z0-9]+$', 'once'))
-    error(['Nombre de sujeto no válido para BIDS:\n' ...
+    error(['Invalid subject name for BIDS:\n' ...
         '  "%s"\n' ...
-        'Solo caracteres alfanuméricos permitidos.'], name)
+        'Only alphanumeric characters are allowed.'], name)
 end
 end
