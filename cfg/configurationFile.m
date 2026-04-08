@@ -32,6 +32,15 @@ cfg.sessionName = '';
 
 cfg.dataFormat = 'y';
 
+%% BIDS - Phase Units:
+% Description: Units of the phase data stored in the JSON sidecar of phase
+% images. Allowed values are:
+%
+% - 'arbitrary' for phase data in arbitrary units.
+% - 'rad' for phase data in radians.
+
+cfg.phaseUnits = 'arbitrary';
+
 %% BIDS - Anonymization:
 % Description: Delete personal information in JSON metadata (sex, name, id 
 % date of birth, size, weight, age, etc):

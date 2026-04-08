@@ -31,7 +31,7 @@ end
 data = jsondecode(fileread(jsonPath));
 
 % Update JSON
-data.Units = 'arbitrary';
+data.Units = cfg.phaseUnits;
 
 % Encode JSON
 if verLessThan('matlab','9.10')
