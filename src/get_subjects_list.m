@@ -34,27 +34,50 @@ if ~isfolder(cfg.root_folder)
         cfg.root_folder)
 end
 
-%% List the contents:
-% List the full contents of the folder. We also remove the very common
-% '.' and '..' entries. Additionally, we check that the folder is not
-% empty.
+%% Conversion mode:
+% If we are in single subject mode, the folders_list will be the 
+% root_folder. Otherwise, we must scan the directory and extract the 
+% subject folders.
 
-folders_list = dir(cfg.root_folder);
-folders_list = folders_list(~ismember({folders_list.name}, {'.','..'}));
+if strcmp(cfg.conversion_mode, 'single_subject')
 
-if isempty(folders_list)
-    error('The folder is empty: %s', cfg.root_folder)
-end
+    [root, name, ~] = fileparts(cfg.root_folder);
+    
+    % Update the root_folder:
+    cfg.root_folder = root;
 
-%% Keep only directories:
-% Keep only the directories, removing any files contained in the root
-% folder that do not correspond to participant folders.
+    % Generate the struct:
+    folders_list = struct();
+    folders_list.name = name;
+    folders_list.folder = root;
+    folders_list.date = ''; 
+    folders_list.bytes = NaN;
+    folders_list.isdir = true;
+    folders_list.datenum = NaN;
 
-is_dir = [folders_list.isdir];
-folders_list = folders_list(is_dir);
+else
+    %% List the contents:
+    % List the full contents of the folder. We also remove the very common
+    % '.' and '..' entries. Additionally, we check that the folder is not
+    % empty.
 
-if isempty(folders_list)
-    error('No participant subfolders were found in: %s', cfg.root_folder)
+    folders_list = dir(cfg.root_folder);
+    folders_list = folders_list(~ismember({folders_list.name}, {'.','..'}));
+
+    if isempty(folders_list)
+        error('The folder is empty: %s', cfg.root_folder)
+    end
+
+    %% Keep only directories:
+    % Keep only the directories, removing any files contained in the root
+    % folder that do not correspond to participant folders.
+
+    is_dir = [folders_list.isdir];
+    folders_list = folders_list(is_dir);
+
+    if isempty(folders_list)
+        error('No participant subfolders were found in: %s', cfg.root_folder)
+    end
 end
 
 %% Generate subjects IDs and paths:
@@ -104,10 +127,10 @@ subject_sessions = {};
 
 % Iterate over subjects folders:
 for i = 1 : numel(subject_paths)
-    
+
     % List session folders for a specific subject:
     session_folders = list_session_folders(subject_path);
-    
+
     % Skip if the session folder list is empty:
     if isempty(session_folders)
         warning('getSubjectsList:NoSessions', ...
@@ -166,8 +189,8 @@ end
 
 %% Session folder listing helper:
 function entries = list_session_folders(subject_path)
-%LISTSESSIONFOLDERS  Direct subfolders of subject_path as a sorted dir 
-% struct. Excludes '.', '..', hidden entries and non-directories. Entries 
+%LISTSESSIONFOLDERS  Direct subfolders of subject_path as a sorted dir
+% struct. Excludes '.', '..', hidden entries and non-directories. Entries
 % are sorted by modification time ascending (oldest first), with a stable
 % alphabetical tie-break so the order is deterministic across operating
 % systems. Returns an empty typed struct on failure or when no valid

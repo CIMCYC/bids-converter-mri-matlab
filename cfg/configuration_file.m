@@ -4,13 +4,25 @@
 % Contact: dlopez@ugr.es (David Lopez-Garcia)
 % -------------------------------------------------------------------------
 
-%% RAW - Root folder:
+%% RAW - Dataset conversion folder:
 % Description: Enter here the directory where the folders corresponding to 
 % your participants containing the raw DICOM files are located. 
 % Remember that the structure of this folder must be: 
 % Directory > Subjects > Sessions
 
-cfg.root_folder = '/Volumes/SSD/pruebas_resonancia/data/06-04-2026/raw';
+% cfg.root_folder = '/Volumes/SSD/pruebas_resonancia/data/06-04-2026/raw';
+% cfg.conversion_mode = 'dataset';
+
+%% RAW - Single subject conversion:
+% Description: Single subject conversion mode. The converter can convert 
+% the DICOM data of a single subject rather than an entire dataset. To do 
+% so, we must specify the path to the specific subject's folder. Remember 
+% that within the subject's folder there must be a subfolder for each 
+% session. Subjects with a single session should only contain one 
+% subfolder.
+
+cfg.root_folder = '/Volumes/SSD/pruebas_resonancia/data/06-04-2026/raw/03';
+cfg.conversion_mode = 'single_subject';
 
 %% BIDS - Output directory:
 % Description: Enter here the directory where you want the dataset to be 
@@ -45,6 +57,13 @@ cfg.data_format = 'y';
 % - 'y' for removing personal information.
 
 cfg.anonymization = 'y';
+
+%% Data converters path:
+% Description: For the converter to work correctly, we must have two 
+% packages installed on our machine: dcm2niix for DICOM to NIFTI conversion 
+% and spec2nii for spectroscopy data. If spectroscopy data conversion is 
+% not needed, the latter is not required. 
+% Enter in these fields the path to the required packages:
 
 cfg.dcm2niix_path = '/Users/David/anaconda3/bin';
 cfg.spec2nii_path = '/Users/David/anaconda3/bin';
