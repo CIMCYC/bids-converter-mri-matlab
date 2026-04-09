@@ -23,7 +23,7 @@ run_conversion_command(cfg, command);
 % For example, field maps and phase files require modification to comply 
 % with the BIDS standard.
 
-rename_bids_converted_files(cfg,dcm);
+cfg = rename_bids_converted_files(cfg,dcm);
 
 %% Update taskName in sidecar JSON:
 % If task data are present, we must update the task name in the

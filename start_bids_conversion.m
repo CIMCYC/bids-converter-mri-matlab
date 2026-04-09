@@ -13,9 +13,9 @@ for i = 1 : subjects.n
     for j = 1 : numel(sessions)
 
         cfg.session_id = sessions{j}.id;
-        
+
         fprintf(['\n <strong> > Subject id: </strong>' cfg.subject_id]);
-        fprintf([' > <strong> Session id: </strong>' cfg.session_id '\n']);
+        fprintf([' > <strong>Session id: </strong>' cfg.session_id '\n']);
 
         for k = 1 : numel(dcm)
             %% DICOM folder:

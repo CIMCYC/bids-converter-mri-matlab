@@ -1,4 +1,4 @@
-function rename_bids_converted_files(cfg, dcm)
+function cfg = rename_bids_converted_files(cfg, dcm)
 
 switch cfg.data_format
     case 'y', ext = ".nii.gz";
@@ -77,8 +77,7 @@ if strcmp(dcm.modality,'sbref')
     phase_file = fullfile(cfg.out_folder, cfg.file_name + "_ph" + ext);
 
     if exist(phase_file, "file")
-
-        % MAGNITUDE FILES:
+        %% MAGNITUDE FILES:
 
         % Build the new name for the magnitude file:
         dcm.part = 'mag';
@@ -96,7 +95,7 @@ if strcmp(dcm.modality,'sbref')
         movefile(old_json_path, new_json_path);
         movefile(old_nii_path, new_nii_path);
 
-        % PHASE FILES:
+        %% PHASE FILES:
 
         % Build the new name for the phase file:
         dcm.part = 'phase';
@@ -113,5 +112,10 @@ if strcmp(dcm.modality,'sbref')
         % Rename the files:
         movefile(old_json_path, new_json_path);
         movefile(old_nii_path, new_nii_path);
+
+        %% Update file_names in cfg:
+        dcm.part = 'mag'; cfg = generate_bids_filename(cfg,dcm);
+        dcm.part = 'phase'; cfg_ = generate_bids_filename(cfg,dcm);
+        cfg.file_name_phase_sbref = cfg_.file_name;
     end
 end
