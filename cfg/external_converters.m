@@ -6,8 +6,8 @@
 %% Add containing folders to the PATH:
 %  Add the path of both the dcm2niix and spec2nii packages:
 
-% setenv('PATH', [getenv('PATH') ':/usr/local/fsl/bin']);
 % Linux (configuration for myccu3.ugr.es)
+setenv('PATH', [getenv('PATH') ':/opt/homebrew/bin']);
 
 %% Verify access
 %  Check whether we can access the converters from MATLAB's system call.
@@ -40,3 +40,6 @@ if spe_status_check ~= 0
 else
     fprintf('  - Data converter spec2nii > <strong>OK</strong> \n');
 end
+
+%% Clear the workspace:
+clear spe_cmdout_check spe_status_check dcm_cmdout_check dcm_status_check

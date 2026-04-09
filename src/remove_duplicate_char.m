@@ -1,10 +1,11 @@
-function cadena = removeDuplicateChar(cadena,caracter)
-%REMOVEDUPLICATECHAR Removes consecutive duplicates of a specified character 
-% in a string.
+function cadena = remove_duplicate_char(cadena,caracter)
+%remove_duplicate_char Removes consecutive duplicates of a specified 
+% character in a string.
 %
-%   cadena = REMOVEDUPLICATECHAR(cadena, caracter) takes a string or character
-%   array and replaces any sequence of two or more consecutive occurrences 
-%   of the specified character with a single instance of that character.
+% cadena = remove_duplicate_char(cadena, caracter) takes a string or 
+% character array and replaces any sequence of two or more consecutive 
+% occurrences of the specified character with a single instance of that 
+% character.
 %
 %   Inputs:
 %       cadena   - Input string or character array to process.

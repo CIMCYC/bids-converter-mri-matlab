@@ -1,30 +1,30 @@
-%% DATASET DESCRIPTION FILE (cfg_dataset_description.m)
+%% DATASET DESCRIPTION FILE (dataset_description.m)
 % -------------------------------------------------------------------------
 % Brain, Mind and Behavioral Research Center - University of Granada.
 % Contact: dlopez@ugr.es (David Lopez-Garcia)
 % -------------------------------------------------------------------------
 
-% Please edit this file before gererate the final dataset structure. The
-% file dataset_description.json will be created based on the information
-% provided. 
+% Please edit this file before the conversion.
+% The file dataset_description.json will be created based on the 
+% information provided. 
 
 % Information extracted from the oficial BIDS specification website.
 
 %% Name (REQUIRED) [type: string]
 % Description: Name of the dataset.
 
-datasetDescription.Name = 'fmri_bids';
+cfg.dataset_description.json.Name = 'fmri_bids';
 
 %% BIDSVersion (REQUIRED) [type: string]
 % Description: The version of the BIDS standard that was used.
 
-datasetDescription.BIDSVersion = '1.0.2';
+cfg.dataset_description.json.BIDSVersion = '1.0.2';
 
 %% DatasetType (RECOMMENDED) [type: string]
 % Description: The interpretation of the dataset. MUST be one of "raw" or 
 % "derivative". For backwards compatibility, the default value is "raw".
 
-datasetDescription.DatasetType = 'raw';
+cfg.dataset_description.json.DatasetType = 'raw';
 
 %% License (RECOMMENDED) [type: string]
 % Description: The license for the dataset. The use of license name 
@@ -50,13 +50,13 @@ datasetDescription.DatasetType = 'raw';
 
 % Plase, feel free to add more license files to tamplates/licenses folder. 
 
-datasetDescription.License = 'CCBY';
+cfg.dataset_description.json.License = 'CCBY';
 
 %% Authors (OPTIONAL) [type: array of strings]
 % Description: List of individuals who contributed to the creation/curation 
 % of the dataset.
 
-datasetDescription.Authors = {
+cfg.dataset_description.json.Authors = {
     '';
     ''
     };
@@ -65,7 +65,7 @@ datasetDescription.Authors = {
 % Description: Text acknowledging contributions of individuals or 
 % institutions beyond those listed in Authors or Funding.
 
-datasetDescription.Acknowledgements = '';
+cfg.dataset_description.json.Acknowledgements = '';
 
 %% HowToAcknowledge (OPTIONAL) [type: string]
 % Description: Text containing instructions on how researchers using this 
@@ -73,12 +73,12 @@ datasetDescription.Acknowledgements = '';
 % used to define a publication that should be cited in publications that 
 % use the dataset.
 
-datasetDescription.HowToAcknowledge = '';
+cfg.dataset_description.json.HowToAcknowledge = '';
 
 %% Founding (OPTIONAL) [type: array of strings]
 % Description: List of sources of funding (grant numbers).
 
-datasetDescription.Founding = {
+cfg.dataset_description.json.Founding = {
     '';
     ''
     };
@@ -87,7 +87,7 @@ datasetDescription.Founding = {
 % Description: List of ethics committee approvals of the research protocols 
 % and/or protocol identifiers.
 
-datasetDescription.EthicsApprovals = {
+cfg.dataset_description.json.EthicsApprovals = {
     '';
     ''
     };
@@ -96,7 +96,7 @@ datasetDescription.EthicsApprovals = {
 % Description: List of references to publications that contain information 
 % on the dataset. A reference may be textual or a URI.
 
-datasetDescription.ReferencesAndLinks = {
+cfg.dataset_description.json.ReferencesAndLinks = {
     '';
     ''
     };
@@ -106,4 +106,13 @@ datasetDescription.ReferencesAndLinks = {
 % corresponding paper). DOIs SHOULD be expressed as a valid URI; bare DOIs 
 % such as 10.0.2.3/dfjj.10 are DEPRECATED.
 
-datasetDescription.DatasetDOI = '';
+cfg.dataset_description.json.DatasetDOI = '';
+
+%% Files to include:
+% Description: Please define the files to be imported to the BIDS dataset.
+
+cfg.dataset_description.flag = true;
+cfg.dataset_description.include_readme = true;
+cfg.dataset_description.include_license = true;
+cfg.dataset_description.include_changes = true;
+cfg.dataset_description.include_bidsignore = true;

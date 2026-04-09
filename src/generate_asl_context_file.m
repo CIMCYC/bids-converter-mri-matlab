@@ -1,11 +1,11 @@
-function generateASLContextFile(cfg, dcm)
-if strcmp(dcm.dataType, 'perf') && strcmp(dcm.modality, 'asl')
+function generate_asl_context_file(cfg, dcm)
+if strcmp(dcm.data_type, 'perf') && strcmp(dcm.modality, 'asl')
     %% Build the control-label sequence.
     % Important: We assume that the sequence always starts with a "control"
     % followed by a "label", which is the standard Siemens/PCASL pattern.
 
-    nVolumes = dcm.TotalAcquiredPairs * 2;
-    context = strings(nVolumes, 1);
+    n_volumes = dcm.TotalAcquiredPairs * 2;
+    context = strings(n_volumes, 1);
 
     for i = 1:dcm.TotalAcquiredPairs
         idx = (i-1)*2 + 1;
@@ -25,12 +25,12 @@ if strcmp(dcm.dataType, 'perf') && strcmp(dcm.modality, 'asl')
     %% Generate the TSV file.
     % First, build the full output path:
 
-    outputFilePath = fullfile(cfg.outFolder, cfg.contextFileName);
+    output_path = fullfile(cfg.outFolder, cfg.contextFileName);
 
     % Write the file
-    fid = fopen(outputFilePath, 'w');
+    fid = fopen(output_path, 'w');
     if fid == -1
-        error('Could not create file: %s', outputFilePath);
+        error('Could not create file: %s', output_path);
     end
 
     % Add the volume_type header required by the BIDS standard:

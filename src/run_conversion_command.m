@@ -1,8 +1,8 @@
-function [status, cmdout] = runConversionCommand(cfg,command)
+function [status, cmdout] = run_conversion_command(cfg,command)
 
 % Show progress:
-[~, folderName] = fileparts(cfg.inFolder);
-fprintf(['   - DCM Folder: ' char(folderName) '>']);
+[~, f] = fileparts(cfg.dcm_folder);
+fprintf(['   - DCM Folder: ' char(f) '>']);
 
 % Execute the system calls:
 for i = 1 : length(command)

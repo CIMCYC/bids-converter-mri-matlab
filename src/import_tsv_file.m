@@ -1,6 +1,6 @@
-function importTSVFile(cfg, dcm)
+function import_tsv_file(cfg, dcm)
 
-if strcmp(dcm.dataType,'func') && cfg.importTSV && isfield(dcm, 'events')
+if strcmp(dcm.data_type,'func') && cfg.import_tsv && isfield(dcm, 'events')
     
     file = dir([dcm.folder filesep dcm.events]);
     filepath = fullfile(file.folder,file.name);
