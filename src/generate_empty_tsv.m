@@ -1,14 +1,25 @@
-function generate_empty_tsv(cfg, dcm)
-if strcmp(dcm.data_type, 'func')
-    %% Generate the events TSV file.
+function generate_empty_tsv(cfg)
+    %% Generate a fake events TSV file.
     % The BIDS standard requires an events.tsv file for functional MRI
-    % data. This function generates an empty template with the mandatory
-    % columns: "onset" and "duration".
-    % Important: This file is a placeholder. The actual onset and duration
-    % values must be filled in by the user before running any analysis.
+    % data. This function generates a fake template with the mandatory
+    % columns: "onset" and "duration", populated with random values.
+    % Important: This file contains fake data intended for testing
+    % purposes only. Replace the values with real experimental data
+    % before running any analysis.
+
+    %% Generate random onset and duration values.
+    % Onset times are drawn from a uniform distribution between 0 and
+    % 300 seconds, then sorted in ascending order to simulate a
+    % realistic temporal sequence.
+    % Duration values are drawn from a uniform distribution between
+    % 0.5 and 5 seconds.
+
+    n_events = 10;
+    onsets = sort(rand(n_events, 1) * 300);
+    durations = 0.5 + rand(n_events, 1) * 4.5;
 
     % Build the full output path:
-    output_path = fullfile(cfg.outFolder, cfg.eventsFileName);
+    output_path = fullfile(cfg.out_folder, cfg.events_filename);
 
     % Write the file:
     fid = fopen(output_path, 'w');
@@ -19,10 +30,14 @@ if strcmp(dcm.data_type, 'func')
     % Add the mandatory headers required by the BIDS standard:
     fprintf(fid, 'onset\tduration\n');
 
+    % Write the fake event rows:
+    for i = 1:n_events
+        fprintf(fid, '%.4f\t%.4f\n', onsets(i), durations(i));
+    end
+
     % Close the file once written:
     fclose(fid);
 
-    fprintf('     > Empty events TSV file generated \n');
+    fprintf('     > Fake events TSV file generated \n');
 
-end
 end
