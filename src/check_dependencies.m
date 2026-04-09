@@ -1,3 +1,4 @@
+function check_dependencies(cfg)
 %% Paths to external converters:
 %  Paths to the external packages required to perform the DICOM to NIFTI
 %  conversion. Both packages must be installed on the machine and must be
@@ -7,7 +8,8 @@
 %  Add the path of both the dcm2niix and spec2nii packages:
 
 % Linux (configuration for myccu3.ugr.es)
-setenv('PATH', [getenv('PATH') ':/opt/homebrew/bin']);
+setenv('PATH', [getenv('PATH') ':' cfg.dcm2niix_path]);
+setenv('PATH', [getenv('PATH') ':' cfg.spec2nii_path]);
 
 %% Verify access
 %  Check whether we can access the converters from MATLAB's system call.
@@ -41,5 +43,4 @@ else
     fprintf('  - Data converter spec2nii > <strong>OK</strong> \n');
 end
 
-%% Clear the workspace:
-clear spe_cmdout_check spe_status_check dcm_cmdout_check dcm_status_check
+end

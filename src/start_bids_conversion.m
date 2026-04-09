@@ -5,20 +5,20 @@ fprintf('\n<strong>Starting NIFTI-BIDS conversion: </strong> \n');
 
 % Iterate over subjects:
 for i = 1 : subjects.n
-
+    %% Get sessions list
     cfg.subject_id = subjects.ids{i};
-    sessions = subjects.sessions{i};
-
-    % Iterate over sessions:
+    sessions = get_sessions_list(cfg, subjects.sessions{i});
+    
+    %% Iterate over sessions:
     for j = 1 : numel(sessions)
-
+        
+        % Session ID:
         cfg.session_id = sessions{j}.id;
 
         fprintf(['\n <strong> > Subject id: </strong>' cfg.subject_id]);
         fprintf([' > <strong>Session id: </strong>' cfg.session_id '\n']);
 
         for k = 1 : numel(dcm)
-            %% DICOM folder:
             if ~isempty(dcm{k})
                 %% Output folder:
                 % Define the output path so that it complies with the BIDS

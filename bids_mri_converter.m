@@ -13,11 +13,15 @@ addpath('src/');
 % packages required for the conversion are accessible from MATLAB, and
 % initializing the configuration files for the dataset and the subject.
 
-run cfg/external_converters.m;
 run cfg/dataset_description.m;
 run cfg/configuration_file.m;
+run cfg/folders_to_convert.m;
 
 initialize_bids_dataset(cfg);
+
+%% Check dependencies:
+
+check_dependencies(cfg)
 
 %% Get subject list:
 
