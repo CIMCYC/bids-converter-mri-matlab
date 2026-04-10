@@ -38,6 +38,9 @@ if strcmp(dcm.data_type,'fmap')
         % Rename the files:
         movefile(old_json_path, new_json_path);
         movefile(old_nii_path, new_nii_path);
+
+        fprintf(['      > Renamed fieldmap files. \n']);
+
     end
 end
 
@@ -60,6 +63,8 @@ if isfield(dcm,'part') && strcmp(dcm.part,'phase')
     % Rename the files:
     movefile(old_json_path, new_json_path);
     movefile(old_nii_path, new_nii_path);
+
+    fprintf(['      > Renamed phase series files. \n']);
 
 end
 
@@ -95,6 +100,8 @@ if strcmp(dcm.modality,'sbref')
         movefile(old_json_path, new_json_path);
         movefile(old_nii_path, new_nii_path);
 
+        fprintf(['      > Renamed sbref magnitude file. \n']);
+
         %% PHASE FILES:
 
         % Build the new name for the phase file:
@@ -112,6 +119,8 @@ if strcmp(dcm.modality,'sbref')
         % Rename the files:
         movefile(old_json_path, new_json_path);
         movefile(old_nii_path, new_nii_path);
+
+        fprintf(['      > Renamed sbref phase file. \n']);
 
         %% Update file_names in cfg:
         dcm.part = 'mag'; cfg = generate_bids_filename(cfg,dcm);

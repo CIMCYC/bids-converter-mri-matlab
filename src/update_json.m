@@ -12,6 +12,7 @@ fn = fieldnames(fields);
 
 for i = 1:numel(fn)
     json_data.(fn{i}) = fields.(fn{i});
+    fprintf(['      > JSON key <' char(fn{i}) '> updated.  \n']);
 end
 
 % Encode JSON

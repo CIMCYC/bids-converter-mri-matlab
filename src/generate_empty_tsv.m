@@ -38,6 +38,6 @@ function generate_empty_tsv(cfg)
     % Close the file once written:
     fclose(fid);
 
-    fprintf('     > Fake events TSV file generated \n');
+    fprintf('      > Dummy events TSV file generated \n');
 
 end

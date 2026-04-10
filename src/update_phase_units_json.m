@@ -26,6 +26,7 @@ if exist('json_file','var')
 
     % Update JSON file:
     update_json(json_file,fields)
+    
 end
 
 end
