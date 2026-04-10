@@ -25,7 +25,7 @@ if strcmp(dcm.data_type, 'perf') && strcmp(dcm.modality, 'asl')
     %% Generate the TSV file.
     % First, build the full output path:
 
-    output_path = fullfile(cfg.outFolder, cfg.contextFileName);
+    output_path = fullfile(cfg.out_folder, cfg.context_filename);
 
     % Write the file
     fid = fopen(output_path, 'w');
