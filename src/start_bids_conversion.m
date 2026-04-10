@@ -5,8 +5,16 @@ fprintf('\n<strong>Starting NIFTI-BIDS conversion: </strong> \n');
 
 % Iterate over subjects:
 for i = 1 : subjects.n
-    %% Get sessions list
+    %% Check subject name
+    % If the subject's folder already exists, it will be renamed in order 
+    % to avoid losing data. 
+    
     cfg.subject_id = subjects.ids{i};
+    rename_existing_subject(cfg);
+
+    %% Get sessions list
+    % Search for subfolders in subject's main folder.
+    
     sessions = get_sessions_list(cfg, subjects.sessions{i});
     
     %% Iterate over sessions:
