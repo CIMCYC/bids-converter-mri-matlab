@@ -118,9 +118,9 @@ end
 
 %% Sessions:
 % Discover session subfolders inside the participant directory. Every
-% direct subfolder of the subject is treated as a session, sorted by
-% modification time (oldest first) so that ses-01 is the earliest
-% acquisition.
+% direct subfolder of the subject is treated as a session. The session
+% ID is derived from the folder name, sanitized to remove any
+% non-alphanumeric characters for BIDS compatibility.
 
 % Initialization:
 subject_sessions = {};
@@ -129,7 +129,7 @@ subject_sessions = {};
 for i = 1 : numel(subject_paths)
 
     % List session folders for a specific subject:
-    session_folders = list_session_folders(subject_path);
+    session_folders = list_session_folders(subject_paths{i});
 
     % Skip if the session folder list is empty:
     if isempty(session_folders)
@@ -143,9 +143,9 @@ for i = 1 : numel(subject_paths)
     sessions_for_subject = {};
 
     for j = 1:numel(session_folders)
-        session.id = sprintf('ses-%02d', j);
+        session.id = ['ses-' regexprep(session_folders(j).name, '[^a-zA-Z0-9]', '')];
         session.name = session_folders(j).name;
-        session.path = fullfile(subject_path, session_folders(j).name);
+        session.path = fullfile(subject_paths{i}, session_folders(j).name);
         session.datenum = session_folders(j).datenum;
 
         sessions_for_subject{j,1} = session;                    %#ok<AGROW>
@@ -189,16 +189,11 @@ end
 
 %% Session folder listing helper:
 function entries = list_session_folders(subject_path)
-%LISTSESSIONFOLDERS  Direct subfolders of subject_path as a sorted dir
-% struct. Excludes '.', '..', hidden entries and non-directories. Entries
-% are sorted by modification time ascending (oldest first), with a stable
-% alphabetical tie-break so the order is deterministic across operating
-% systems. Returns an empty typed struct on failure or when no valid
-% candidates remain, so the caller can treat "no sessions" uniformly.
-%
-% Note: the sort relies on the file system modification time (mtime).
-% If session folders were copied from another machine or restored from
-% a backup, mtime may not reflect the real acquisition order.
+%LISTSESSIONFOLDERS  Direct subfolders of subject_path as a dir struct.
+% Excludes '.', '..', hidden entries and non-directories. Entries are
+% returned in the order provided by the file system. Returns an empty
+% typed struct on failure or when no valid candidates remain, so the
+% caller can treat "no sessions" uniformly.
 
 empty_out = struct('name', {}, 'folder', {}, 'date', {}, ...
     'bytes', {}, 'isdir', {}, 'datenum', {});
@@ -219,9 +214,4 @@ if isempty(entries), entries = empty_out; return; end
 entries = entries(~startsWith({entries.name}, '.'));
 if isempty(entries), entries = empty_out; return; end
 
-% Stable sort: first by name (tie-breaker), then by datenum ascending.
-[~, nameOrder] = sort({entries.name});
-entries = entries(nameOrder);
-[~, dateOrder] = sort([entries.datenum], 'ascend');
-entries = entries(dateOrder);
 end
