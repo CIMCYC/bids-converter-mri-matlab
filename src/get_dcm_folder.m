@@ -15,7 +15,8 @@ items = dir(cfg.dcm_folder);
 dcm_folders = items([items.isdir]);
 dcm_folders = dcm_folders(~ismember({dcm_folders.name}, {'.','..'}));
 
-% If there are several matches, sort them and keep the first one
+%% Several dcm folders found:
+% If there are several matches, sort them and keep the first one.
 if length(dcm_folders) > 1
 
     % Sort by name:
@@ -30,6 +31,18 @@ if length(dcm_folders) > 1
     fprintf('Using the first one after sorting: \n');
 end
 
-cfg.dcm_folder = fullfile(dcm_folders.folder,dcm_folders.name);
+%% No dcm folder found:
+% It may occur that for a specific subject and session there is no
+% associated raw data folder. This is quite common and it is not advisable
+% to stop the program execution because of it; it is preferable to continue
+% without performing the conversion. In this case, we leave the field empty
+% to skip the conversion.
 
+if isempty(dcm_folders)
+    % Warning
+    fprintf('   - <strong>Warning:</strong> No DCM folders found.\n');
+    cfg.dcm_folder = '';
+else
+    cfg.dcm_folder = fullfile(dcm_folders.folder,dcm_folders.name);
+end
 end

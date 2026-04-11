@@ -49,9 +49,12 @@ for i = 1 : subjects.n
 
                 %% Get dcm folder to convert: 
                 % Retrieve the directories where the raw data to be 
-                % converted are located.
+                % converted are located. 
 
                 cfg = get_dcm_folder(cfg);
+
+                % If no folder found, continue.
+                if isempty(cfg.dcm_folder); continue; end
 
                 %% Convert DICOM - NIFTI:
                 % Conversion routine. Here we will make system calls that 
