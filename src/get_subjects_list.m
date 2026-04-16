@@ -82,8 +82,8 @@ end
 
 %% Generate subjects IDs and paths:
 % The name of each folder will be used as the subject ID for the data
-% transformed to BIDS. For this reason, we must check that the
-% characters are alphanumeric (we must avoid the use of - or _).
+% transformed to BIDS. Any non-alphanumeric characters are removed
+% from the folder name to ensure BIDS compatibility.
 
 % Initialization:
 subject_ids = {};
@@ -107,10 +107,11 @@ for i = 1:numel(folders_list)
         continue
     end
 
-    % Validate BIDS-compatible name:
-    validate_subject_name(subject_name)
+    % Sanitize the subject name for BIDS compatibility:
+    % Remove any non-alphanumeric characters from the folder name.
+    subject_name = regexprep(subject_name, '[^a-zA-Z0-9]', '');
 
-    % Store the participant's ID and foder:
+    % Store the participant's ID and folder:
     subject_ids{end+1,1} = ['sub-' subject_name];               %#ok<AGROW>
     subject_paths{end+1,1} = subject_path;                      %#ok<AGROW>
 
@@ -176,15 +177,6 @@ subjects.paths = subject_paths;
 subjects.sessions = subject_sessions;
 subjects.n = numel(subject_ids);
 
-end
-
-%% Alphanumeric validation function:
-function validate_subject_name(name)
-if isempty(regexp(name, '^[a-zA-Z0-9]+$', 'once'))
-    error(['Invalid subject name for BIDS:\n' ...
-        '  "%s"\n' ...
-        'Only alphanumeric characters are allowed.'], name)
-end
 end
 
 %% Session folder listing helper:
