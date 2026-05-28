@@ -32,14 +32,25 @@ for i = 1 : subjects.n
                 % Define the output path so that it complies with the BIDS
                 % standard. The hierarchy should be:
                 % Subject > Session > Data type.
+                % If the current entry is flagged as derivative
+                % (dcm{k}.derivatives = '<pipeline-name>'), the output is
+                % placed under derivatives/<pipeline>/sub-XX/ses-YY/...
+                % as required by the BIDS specification.
 
                 % Original DICOM folder to convert:
                 cfg.dcm_folder = fullfile(sessions{j}.path, ...
                     dcm{k}.folder);
 
                 % Output directory:
-                cfg.out_folder = fullfile(cfg.bids_directory, ...
-                    cfg.subject_id, cfg.session_id, dcm{k}.data_type);
+                if isfield(dcm{k}, 'derivatives') && ~isempty(dcm{k}.derivatives)
+                    initialize_derivatives_pipeline(cfg, dcm{k}.derivatives);
+                    cfg.out_folder = fullfile(cfg.bids_directory, ...
+                        'derivatives', dcm{k}.derivatives, ...
+                        cfg.subject_id, cfg.session_id, dcm{k}.data_type);
+                else
+                    cfg.out_folder = fullfile(cfg.bids_directory, ...
+                        cfg.subject_id, cfg.session_id, dcm{k}.data_type);
+                end
 
                 %% Generate BIDS-compatible filename:
                 % This filename is generated based on the data provided for 

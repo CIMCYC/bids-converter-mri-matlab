@@ -10,8 +10,8 @@
 % Remember that the structure of this folder must be: 
 % Directory > Subjects > Sessions
 
-% cfg.root_folder = '/Volumes/SSD/pruebas_resonancia/data/06-04-2026/raw';
-% cfg.conversion_mode = 'dataset';
+cfg.root_folder = '/Users/David/Desktop/dataset-marta/dicom';
+cfg.conversion_mode = 'dataset';
 
 %% RAW - Single subject conversion:
 % Description: Single subject conversion mode. The converter can convert 
@@ -21,14 +21,14 @@
 % session. Subjects with a single session should only contain one 
 % subfolder.
 
-cfg.root_folder = '/Volumes/SSD/pruebas_resonancia/data/06-04-2026/raw/03';
-cfg.conversion_mode = 'single_subject';
+% cfg.root_folder = '/Volumes/SSD/pruebas_resonancia/data/06-04-2026/raw/03';
+% cfg.conversion_mode = 'single_subject';
 
 %% BIDS - Output directory:
 % Description: Enter here the directory where you want the dataset to be 
 % saved after the conversion.
 
-cfg.bids_directory = '/Volumes/SSD/pruebas_resonancia/data/06-04-2026/bids';
+cfg.bids_directory = '/Users/David/Desktop/dataset-marta/bids';
 
 %% Sessions:
 % Description: Specify in this parameter whether your experiment has 

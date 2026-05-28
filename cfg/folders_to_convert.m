@@ -12,7 +12,6 @@
 %               - 'dwi':  Diffusion data.
 %               - 'mrs':  Magnetic Resonance Spectroscopy data.
 %               - 'per':  Perfusion data.
-%               - 'beh':  Behavioral data.
 % - [required] MODALITY: The category of brain data recorded by a file. 
 %              Examples:
 %               - For anatomical data:
@@ -85,95 +84,111 @@
 % - [optional] PART: The part-<label> entity is used to indicate which
 %         component of the complex representation of the MRI signal is
 %         represented in voxel data.
+% - [optional] DERIVATIVES: Name of the derivatives pipeline that produced
+%         this data. When present, the converted files are stored under
+%         <bids_directory>/derivatives/<pipeline>/sub-XX/ses-YY/<data_type>/
+%         instead of the raw data root, as required by the BIDS standard.
+%         A dataset_description.json file is generated automatically inside
+%         the pipeline folder the first time it is created.
+%         Example:
+%               - dcm{i}.derivatives = 'siemens-scanner';
+% - [optional] DESC: The desc-<label> entity is the last entity before the
+%         suffix and is used to distinguish different variants of the same
+%         modality. It is typically used together with the DERIVATIVES
+%         field to distinguish files produced by the same pipeline (e.g.
+%         FA, ADC, TRACEW maps derived from a DWI acquisition).
+%         Example:
+%               - dcm{i}.desc = 'fa';
 % - EVENTS:
 
 %% ANAT: Anatomy imaging data:
 
-dcm{1}.folder = 't1_mprage_sag_iso_08_pat2_27*';
+dcm{1}.folder = 't1_mprage_sag_p2_1iso_MGH*';
 dcm{1}.data_type = 'anat';
 dcm{1}.modality = 'T1w';
- 
+
+dcm{2}.folder = 't2_tse_tra_448_p2_3mm*';
+dcm{2}.data_type = 'anat';
+dcm{2}.modality = 'T2w';
+
 %% FUNC: Task (including resting state) imaging data:
 
-dcm{2}.folder = 'Resting_cmrr_ep2d_bold_25mm_50sl_SMS2_TR1730_TE30_wphase_mag*';
-dcm{2}.data_type = 'func';
-dcm{2}.modality = 'bold';
-dcm{2}.task = 'rest';
-dcm{2}.part = 'mag';
-dcm{2}.fmapid = 'FMAP_PDIFF';
-
-dcm{3}.folder = 'Resting_cmrr_ep2d_bold_25mm_50sl_SMS2_TR1730_TE30_wphase_pha*';
+dcm{3}.folder = 'Resting*';
 dcm{3}.data_type = 'func';
 dcm{3}.modality = 'bold';
 dcm{3}.task = 'rest';
-dcm{3}.part = 'phase';
-dcm{3}.phase_units = 'arbitrary';
+dcm{3}.fmapid = 'FMAP';
 
-dcm{4}.folder = 'Resting_cmrr_ep2d_bold_25mm_50sl_SMS2_TR1730_TE30_wphase_SBRef*';
+dcm{4}.folder = 'Rangeltask1*';
 dcm{4}.data_type = 'func';
-dcm{4}.modality = 'sbref';
-dcm{4}.task = 'rest';
-dcm{4}.phase_units = 'arbitrary';
+dcm{4}.modality = 'bold';
+dcm{4}.import_empty_tsv = 'true';
+dcm{4}.task = 'rangeltask1';
+dcm{4}.fmapid = 'FMAP';
 
-dcm{5}.folder = 'run1_cmrr_ep2d_bold_25mm_50sl_SMS2_TR1730_TE30_wphase_mag*';
+dcm{5}.folder = 'Rangeltask2*';
 dcm{5}.data_type = 'func';
 dcm{5}.modality = 'bold';
-dcm{5}.task = 'faces';
-dcm{5}.part = 'mag';
-dcm{5}.run = '1';
 dcm{5}.import_empty_tsv = 'true';
-dcm{5}.fmapid = 'FMAP_PDIFF';
+dcm{5}.task = 'rangeltask2';
+dcm{5}.fmapid = 'FMAP';
 
-dcm{6}.folder = 'run1_cmrr_ep2d_bold_25mm_50sl_SMS2_TR1730_TE30_wphase_pha*';
+dcm{6}.folder = 'Rangeltask3*';
 dcm{6}.data_type = 'func';
 dcm{6}.modality = 'bold';
-dcm{6}.task = 'faces';
-dcm{6}.part = 'phase';
-dcm{6}.run = '1';
-dcm{6}.phase_units = 'arbitrary';
+dcm{6}.import_empty_tsv = 'true';
+dcm{6}.task = 'rangeltask3';
+dcm{6}.fmapid = 'FMAP';
 
-dcm{7}.folder = 'run1_cmrr_ep2d_bold_25mm_50sl_SMS2_TR1730_TE30_wphase_sbref*';
+dcm{7}.folder = 'Gonogo*';
 dcm{7}.data_type = 'func';
-dcm{7}.modality = 'sbref';
-dcm{7}.task = 'faces';
-dcm{7}.run = '1';
-dcm{7}.phase_units = 'arbitrary';
+dcm{7}.modality = 'bold';
+dcm{7}.import_empty_tsv = 'true';
+dcm{7}.task = 'gonogo';
+dcm{7}.fmapid = 'FMAP';
 
-dcm{8}.folder = 'run2_cmrr_ep2d_bold_25mm_50sl_SMS2_TR1730_TE30_wphase_mag*';
-dcm{8}.data_type = 'func';
-dcm{8}.modality = 'bold';
-dcm{8}.task = 'faces';
-dcm{8}.part = 'mag';
-dcm{8}.run = '2';
-dcm{8}.fmapid = 'FMAP_PDIFF';
-dcm{8}.import_empty_tsv = 'true';
-
-dcm{9}.folder = 'run2_cmrr_ep2d_bold_25mm_50sl_SMS2_TR1730_TE30_wphase_pha*';
-dcm{9}.data_type = 'func';
-dcm{9}.modality = 'bold';
-dcm{9}.task = 'faces';
-dcm{9}.part = 'phase';
-dcm{9}.run = '2';
-dcm{9}.phase_units = 'arbitrary';
-
-dcm{10}.folder = 'run2_cmrr_ep2d_bold_25mm_50sl_SMS2_TR1730_TE30_wphase_sbref*';
-dcm{10}.data_type = 'func';
-dcm{10}.modality = 'sbref';
-dcm{10}.task = 'faces';
-dcm{10}.run = '2';
-dcm{10}.phase_units = 'arbitrary';
-
- 
 %% FMAP: Fieldmap data
 
-dcm{11}.folder = 'gre_field_mapping_25mm_mag*';
-dcm{11}.data_type = 'fmap';
-dcm{11}.modality = 'fieldmap';
+dcm{8}.folder = 'gre_field_mapping*';
+dcm{8}.data_type = 'fmap';
+dcm{8}.modality = 'fieldmap';
+dcm{8}.identifier = 'FMAP';
 
-dcm{12}.folder = 'gre_field_mapping_25mm_pha*';
-dcm{12}.data_type = 'fmap';
-dcm{12}.modality = 'fieldmap';
-dcm{12}.identifier = 'FMAP_PDIFF';
+%% DWI: Scanner-derived diffusion maps (ADC, TRACEW, FA, ColFA, TENSOR)
+% These are not raw DWI volumes but scalar/colour maps already computed by
+% the Siemens scanner. They are stored under derivatives/siemens-scanner/
+% and distinguished from one another via the desc-<label> entity.
+
+dcm{9}.folder = 'ep2d_diff_mgh_1_ADC*';
+dcm{9}.data_type = 'dwi';
+dcm{9}.modality = 'dwi';
+dcm{9}.derivatives = 'dwi-reconstruction';
+dcm{9}.desc = 'adc';
+
+dcm{10}.folder = 'ep2d_diff_mgh_1_TRACEW*';
+dcm{10}.data_type = 'dwi';
+dcm{10}.modality = 'dwi';
+dcm{10}.derivatives = 'dwi-reconstruction';
+dcm{10}.desc = 'tracew';
+
+dcm{11}.folder = 'ep2d_diff_mgh_1_FA*';
+dcm{11}.data_type = 'dwi';
+dcm{11}.modality = 'dwi';
+dcm{11}.derivatives = 'dwi-reconstruction';
+dcm{11}.desc = 'fa';
+
+dcm{12}.folder = 'ep2d_diff_mgh_1_ColFA*';
+dcm{12}.data_type = 'dwi';
+dcm{12}.modality = 'dwi';
+dcm{12}.derivatives = 'dwi-reconstruction';
+dcm{12}.desc = 'colfa';
+
+%% DWI:
+% Raw
+
+dcm{13}.folder = 'ep2d_diff_mgh_1*';
+dcm{13}.data_type = 'dwi';
+dcm{13}.modality = 'dwi';
 
 
 %% BIDS - Phase Units:
@@ -183,4 +198,3 @@ dcm{12}.identifier = 'FMAP_PDIFF';
 % - 'arbitrary' for phase data in arbitrary units.
 % - 'rad' for phase data in radians.
 % - 'Hz' for phase data in Hz.
-

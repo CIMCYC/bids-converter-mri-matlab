@@ -12,12 +12,20 @@ end
 
 %% Case 2: Fieldmap data:
 % fmap data with an identifier. We add the B0FieldIdentifier field
-% to the phasediff JSON sidecar.
+% to the corresponding JSON sidecar. The target JSON depends on the
+% modality: for EPI-type fmaps (TOPUP) the suffix is already included
+% in cfg.file_name, while for phase-difference fmaps we must point to
+% the _phasediff JSON.
+
 if strcmp(dcm.data_type, 'fmap') && isfield(dcm, 'identifier')
 
-    json_file = fullfile(cfg.out_folder,cfg.file_name + "_phasediff.json");
-    json_file = remove_duplicate_char(json_file,'_');
+    if strcmp(dcm.modality, 'epi')
+        json_file = fullfile(cfg.out_folder, cfg.file_name + ".json");
+    else
+        json_file = fullfile(cfg.out_folder, cfg.file_name + "_phasediff.json");
+    end
 
+    json_file = remove_duplicate_char(json_file,'_');
     fields.B0FieldIdentifier = dcm.identifier;
 
 end

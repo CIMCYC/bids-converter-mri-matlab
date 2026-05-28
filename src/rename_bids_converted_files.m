@@ -8,7 +8,10 @@ end
 
 
 %% Rename fmap files:
-if strcmp(dcm.data_type,'fmap')
+% Only phase-difference fmaps require renaming. EPI-type fmaps (used
+% for TOPUP) are already converted with the correct BIDS filename,
+% since the _epi suffix is added by generate_bids_filename.
+if strcmp(dcm.data_type,'fmap') && ~strcmp(dcm.modality,'epi')
 
     json_files = dir(fullfile(cfg.out_folder, cfg.file_name + "*.json"));
 

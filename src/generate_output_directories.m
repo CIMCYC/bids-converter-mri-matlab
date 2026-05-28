@@ -10,10 +10,5 @@ if ~exist(cfg.out_folder, 'dir')
     mkdir(cfg.out_folder);
 end
 
-% Create the derivatives folder if needed
-% if ~exist(cfg.derivativesFolder, 'dir')
-%     mkdir(cfg.derivativesFolder);
-% end
-
 end
 
