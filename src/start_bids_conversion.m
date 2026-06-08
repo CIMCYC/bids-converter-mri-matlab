@@ -28,6 +28,31 @@ for i = 1 : subjects.n
 
         for k = 1 : numel(dcm)
             if ~isempty(dcm{k})
+
+                % Original DICOM folder to convert:
+                cfg.dcm_folder = fullfile(sessions{j}.path, ...
+                    dcm{k}.folder);
+
+                %% Get dcm folder to convert:
+                % Retrieve the directory where the raw data to be
+                % converted/copied is located.
+
+                cfg = get_dcm_folder(cfg);
+
+                % If no folder found, continue.
+                if isempty(cfg.dcm_folder); continue; end
+
+                %% Sourcedata branch:
+                % Entries flagged with dcm{k}.sourcedata hold raw,
+                % non-convertible data (e.g. the Siemens TENSOR series).
+                % They are copied verbatim into sourcedata/ instead of
+                % being converted to NIfTI, so we skip the rest of the
+                % pipeline for this entry.
+                if isfield(dcm{k}, 'sourcedata') && ~isempty(dcm{k}.sourcedata)
+                    copy_to_sourcedata(cfg, dcm{k});
+                    continue;
+                end
+
                 %% Output folder:
                 % Define the output path so that it complies with the BIDS
                 % standard. The hierarchy should be:
@@ -36,12 +61,6 @@ for i = 1 : subjects.n
                 % (dcm{k}.derivatives = '<pipeline-name>'), the output is
                 % placed under derivatives/<pipeline>/sub-XX/ses-YY/...
                 % as required by the BIDS specification.
-
-                % Original DICOM folder to convert:
-                cfg.dcm_folder = fullfile(sessions{j}.path, ...
-                    dcm{k}.folder);
-
-                % Output directory:
                 if isfield(dcm{k}, 'derivatives') && ~isempty(dcm{k}.derivatives)
                     initialize_derivatives_pipeline(cfg, dcm{k}.derivatives);
                     cfg.out_folder = fullfile(cfg.bids_directory, ...
@@ -53,23 +72,14 @@ for i = 1 : subjects.n
                 end
 
                 %% Generate BIDS-compatible filename:
-                % This filename is generated based on the data provided for 
+                % This filename is generated based on the data provided for
                 % the current folder (modality, task, run, events, etc.)
 
                 cfg = generate_bids_filename(cfg, dcm{k});
 
-                %% Get dcm folder to convert: 
-                % Retrieve the directories where the raw data to be 
-                % converted are located. 
-
-                cfg = get_dcm_folder(cfg);
-
-                % If no folder found, continue.
-                if isempty(cfg.dcm_folder); continue; end
-
                 %% Convert DICOM - NIFTI:
-                % Conversion routine. Here we will make system calls that 
-                % convert the raw DICOM data into NIfTI format with file 
+                % Conversion routine. Here we will make system calls that
+                % convert the raw DICOM data into NIfTI format with file
                 % names and a structure compatible with the BIDS standard.
 
                 dicom_to_bids(cfg,dcm{k});

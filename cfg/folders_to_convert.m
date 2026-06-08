@@ -11,7 +11,7 @@
 %               - 'fmap': Field mapping data.
 %               - 'dwi':  Diffusion data.
 %               - 'mrs':  Magnetic Resonance Spectroscopy data.
-%               - 'per':  Perfusion data.
+%               - 'perf': Perfusion data.
 % - [required] MODALITY: The category of brain data recorded by a file. 
 %              Examples:
 %               - For anatomical data:
@@ -99,6 +99,15 @@
 %         FA, ADC, TRACEW maps derived from a DWI acquisition).
 %         Example:
 %               - dcm{i}.desc = 'fa';
+% - [optional] SOURCEDATA: Use this field for raw series that CANNOT be
+%         converted to NIfTI (e.g. the Siemens diffusion TENSOR series).
+%         When present, the DICOM folder is copied verbatim into
+%         <bids_directory>/sourcedata/sub-XX/ses-YY/<data_type>/<value>/
+%         and the dcm2niix conversion is skipped entirely (derivatives,
+%         desc, modality, etc. are ignored). The value is the name of the
+%         destination folder inside sourcedata.
+%         Example:
+%               - dcm{i}.sourcedata = 'tensor';
 % - EVENTS:
 
 %% ANAT: Anatomy imaging data:
@@ -154,9 +163,9 @@ dcm{8}.data_type = 'fmap';
 dcm{8}.modality = 'fieldmap';
 dcm{8}.identifier = 'FMAP';
 
-%% DWI: Scanner-derived diffusion maps (ADC, TRACEW, FA, ColFA, TENSOR)
+%% DWI: Scanner-derived diffusion maps (ADC, TRACEW, FA, ColFA)
 % These are not raw DWI volumes but scalar/colour maps already computed by
-% the Siemens scanner. They are stored under derivatives/siemens-scanner/
+% the Siemens scanner. They are stored under derivatives/dwi-reconstruction
 % and distinguished from one another via the desc-<label> entity.
 
 dcm{9}.folder = 'ep2d_diff_mgh_1_ADC*';
@@ -189,6 +198,14 @@ dcm{12}.desc = 'colfa';
 dcm{13}.folder = 'ep2d_diff_mgh_1*';
 dcm{13}.data_type = 'dwi';
 dcm{13}.modality = 'dwi';
+
+%% SOURCEDATA: Non-convertible series (e.g. diffusion tensor)
+% The TENSOR series cannot be converted to NIfTI, so it is copied verbatim
+% into sourcedata/sub-XX/ses-YY/dwi/tensor/ in its original DICOM format.
+
+dcm{14}.folder = 'ep2d_diff_mgh_1_TENSOR*';
+dcm{14}.data_type = 'dwi';
+dcm{14}.sourcedata = 'tensor';
 
 
 %% BIDS - Phase Units:
