@@ -75,10 +75,10 @@ cfg.dataset_description.json.Acknowledgements = '';
 
 cfg.dataset_description.json.HowToAcknowledge = '';
 
-%% Founding (OPTIONAL) [type: array of strings]
+%% Funding (OPTIONAL) [type: array of strings]
 % Description: List of sources of funding (grant numbers).
 
-cfg.dataset_description.json.Founding = {
+cfg.dataset_description.json.Funding = {
     '';
     ''
     };
